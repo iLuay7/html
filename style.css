@@ -1,136 +1,111 @@
 body {
     margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0a1a3a, #021122);
+    font-family: "Tajawal", sans-serif;
+    color: white;
 }
 
-.page-bg {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    background: radial-gradient(circle at top left, #ffb347, transparent 55%),
-                radial-gradient(circle at bottom right, #001a3c, #000814 60%);
-    color: #ffffff;
+/* Sun Glow */
+.sun {
+    position: fixed;
+    top: -150px;
+    left: -150px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #ffcc66, #ff8800, transparent 70%);
+    filter: blur(80px);
+    z-index: 1;
 }
 
-.card {
-    background: rgba(4, 12, 40, 0.9);
-    border-radius: 20px;
-    padding: 32px 40px;
-    max-width: 720px;
+/* Bubbles */
+.bubbles {
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
 }
 
-h1 {
-    margin: 0 0 8px 0;
-    font-size: 28px;
+.bubble {
+    position: absolute;
+    bottom: -120px;
+    width: 20px;
+    height: 20px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 50%;
+    animation: rise 12s infinite ease-in;
 }
 
-.subtitle {
-    margin: 0 0 24px 0;
-    font-size: 14px;
-    color: #c7d0e8;
+.bubble:nth-child(odd) { width: 28px; height: 28px; }
+.bubble:nth-child(3n) { width: 16px; height: 16px; }
+
+@keyframes rise {
+    0% { transform: translateY(0) scale(1); opacity: 0.3; }
+    100% { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+}
+
+.bubble:nth-child(1) { left: 10%; animation-duration: 9s; animation-delay: 0s; }
+.bubble:nth-child(2) { left: 25%; animation-duration: 13s; animation-delay: 2s; }
+.bubble:nth-child(3) { left: 40%; animation-duration: 10s; animation-delay: 1s; }
+.bubble:nth-child(4) { left: 55%; animation-duration: 14s; animation-delay: 3s; }
+.bubble:nth-child(5) { left: 70%; animation-duration: 11s; animation-delay: 1s; }
+/* (repeat pattern for remaining bubbles) */
+
+/* Card */
+.card {
+    width: 600px;
+    margin: 120px auto;
+    padding: 30px;
+    background: #081228cc;
+    border-radius: 18px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 5;
 }
 
 .bank {
-    background: rgba(10, 24, 60, 0.95);
-    border-radius: 16px;
-    padding: 20px 24px;
+    background: #061027;
+    padding: 22px;
+    border-radius: 12px;
     margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-.bank-header {
+.bank-title {
+    color: #00c38b;
+    font-size: 20px;
     margin-bottom: 12px;
 }
 
-.bank-name {
-    font-size: 18px;
-    font-weight: 700;
-    color: #4ff2c1;
-}
-
-.row {
+/* Copy Blocks */
+.copy-row {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
+    gap: 10px;
+    margin: 6px 0;
 }
 
 .label {
-    font-size: 13px;
-    color: #9ca8c8;
-}
-
-.value {
-    font-size: 15px;
-    font-weight: 500;
-    color: #ffffff;
-}
-
-.copy-row {
-    justify-content: space-between;
-}
-
-.copy-text {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px;
-    max-width: 80%;
+    min-width: 110px;
 }
 
 .copy-btn {
-    padding: 6px 16px;
+    padding: 4px 12px;
     border-radius: 999px;
     border: none;
-    outline: none;
     cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
-    background: linear-gradient(135deg, #ffb524, #ff7b24);
-    color: #1b1303;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
-    white-space: nowrap;
+    background: #ffb347;
+    color: #111;
+    font-weight: bold;
+    transition: 0.2s;
 }
 
 .copy-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-}
-
-.copy-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: #ff9900;
 }
 
 .copy-btn.copied {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #eafff4;
-}
-
-.note {
-    margin-top: 18px;
-    font-size: 13px;
-    color: #b5c0dd;
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-    .card {
-        padding: 24px 18px;
-    }
-
-    .copy-text {
-        max-width: 100%;
-    }
-
-    .copy-row {
-        flex-direction: row;
-        justify-content: space-between;
-    }
+    background: #22cc55;
+    color: white;
 }
