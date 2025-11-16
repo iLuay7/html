@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>جميع حساباتي البنكية</title>
-    <link rel="stylesheet" href="style.css">
-</head>
 
+    <!-- ربط ملف التنسيقات الخارجي -->
+    <link rel="stylesheet" href="style.css" />
+</head>
 <body>
 
     <!-- شمس متوهجة -->
     <div class="sun"></div>
 
-    <!-- فقاعات متحركة -->
+    <!-- فقاعات متحركة في الخلفية -->
     <div class="bubbles">
         <div class="bubble"></div>
         <div class="bubble"></div>
@@ -31,125 +32,137 @@
         <div class="bubble"></div>
     </div>
 
+    <!-- البطاقة الرئيسية -->
     <div class="card">
         <h1>جميع حساباتي البنكية</h1>
-        <p class="subtitle">اختر أي حساب وادخل عليه مباشرة من تطبيق بنكك.</p>
+        <p class="subtitle">
+            اختر أي حساب وادخل عليه مباشرة من تطبيق بنكك أو تطبيق البنك.
+        </p>
 
-        <!-- بنك الراجحي -->
+        <!-- البنك الراجحي -->
         <div class="bank">
             <div class="bank-name">البنك الراجحي</div>
 
             <div class="label">اسم المستفيد:</div>
             <div class="value">عمرو محمد أحمد</div>
 
-            <div class="label">رقم الحساب:</div>
             <div class="copy-row">
-                <div class="value" id="rajhi-account">1234567890</div>
-                <button class="copy-btn" data-copy="rajhi-account">نسخ</button>
+                <div class="label">رقم الحساب:</div>
+                <button class="copy-btn" onclick="copyText('1234567890')">
+                    نسخ
+                </button>
             </div>
+            <div class="value selectable">1234567890</div>
 
-            <div class="label">رقم الآيبان (IBAN):</div>
             <div class="copy-row">
-                <div class="value" id="rajhi-iban">SA00 0000 0000 0000 0000 0000</div>
-                <button class="copy-btn" data-copy="rajhi-iban">نسخ</button>
+                <div class="label">رقم الآيبان (IBAN):</div>
+                <button class="copy-btn" onclick="copyText('SA00 0000 0000 0000 0000 0000')">
+                    نسخ
+                </button>
+            </div>
+            <div class="value selectable">
+                SA00 0000 0000 0000 0000 0000
             </div>
         </div>
 
-        <!-- البنك الأهلي -->
+        <!-- البنك الأهلي السعودي -->
         <div class="bank">
             <div class="bank-name">البنك الأهلي السعودي</div>
 
             <div class="label">اسم المستفيد:</div>
             <div class="value">عمرو محمد أحمد</div>
 
-            <div class="label">رقم الحساب:</div>
             <div class="copy-row">
-                <div class="value" id="ahli-account">9876543210</div>
-                <button class="copy-btn" data-copy="ahli-account">نسخ</button>
+                <div class="label">رقم الحساب:</div>
+                <button class="copy-btn" onclick="copyText('9876543210')">
+                    نسخ
+                </button>
             </div>
+            <div class="value selectable">9876543210</div>
 
-            <div class="label">رقم الآيبان (IBAN):</div>
             <div class="copy-row">
-                <div class="value" id="ahli-iban">SA11 1111 1111 1111 1111 1111</div>
-                <button class="copy-btn" data-copy="ahli-iban">نسخ</button>
+                <div class="label">رقم الآيبان (IBAN):</div>
+                <button class="copy-btn" onclick="copyText('SA11 1111 1111 1111 1111 1111')">
+                    نسخ
+                </button>
+            </div>
+            <div class="value selectable">
+                SA11 1111 1111 1111 1111 1111
             </div>
         </div>
 
         <p class="note">
-            الرجاء التأكد من تطابق اسم المستفيد والآيبان قبل التحويل.  
-            لأي استفسار تواصل معي على الواتساب.
+            الرجاء التأكد من تطابق اسم المستفيد ورقم الآيبان قبل تنفيذ التحويل.
+            لأي استفسار يرجى التواصل معي على الواتساب.
         </p>
     </div>
 
     <script>
-        // ====== إخفاء الفقاعات عند الدبل كلك / الدبل تاب ======
-        const bubbles = document.querySelectorAll('.bubble');
+        // ======================
+        // دبل كلك / دبل تاب لإخفاء الفقاعة
+        // ======================
+        const bubbles = document.querySelectorAll(".bubble");
 
-        bubbles.forEach(bubble => {
-            bubble.addEventListener('dblclick', () => hideBubble(bubble));
+        bubbles.forEach((bubble) => {
+            // دبل كلك على الكمبيوتر
+            bubble.addEventListener("dblclick", () => hideBubble(bubble));
 
+            // دبل تاب على الجوال
             let lastTap = 0;
-            bubble.addEventListener('touchend', (e) => {
-                const currentTime = new Date().getTime();
-                const tapLength = currentTime - lastTap;
-                if (tapLength < 350 && tapLength > 0) {
+            bubble.addEventListener("touchend", (e) => {
+                const now = Date.now();
+                const diff = now - lastTap;
+                if (diff > 0 && diff < 350) {
                     e.preventDefault();
                     hideBubble(bubble);
                 }
-                lastTap = currentTime;
+                lastTap = now;
             });
         });
 
         function hideBubble(bubble) {
-            bubble.classList.add('hidden');
+            bubble.classList.add("hidden-bubble");
             setTimeout(() => {
-                bubble.style.display = 'none';
+                bubble.style.display = "none";
             }, 400);
         }
 
-        // ====== أزرار النسخ للحسابات والآيبانات ======
-        const copyButtons = document.querySelectorAll('.copy-btn');
-
-        copyButtons.forEach(btn => {
-            btn.addEventListener('click', async () => {
-                const targetId = btn.dataset.copy;
-                const el = document.getElementById(targetId);
-                if (!el) return;
-
-                const text = el.innerText.trim();
-                const originalLabel = btn.textContent;
-
-                // نحاول نستخدم API الحديث أولاً
+        // ======================
+        // نسخ النص إلى الحافظة + رسالة تم النسخ
+        // ======================
+        function copyText(text) {
+            // دعم navigator.clipboard (جديد) + طريقة احتياطية قديمة
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text)
+                    .then(showCopied)
+                    .catch(showCopied);
+            } else {
+                const textarea = document.createElement("textarea");
+                textarea.value = text;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
+                document.body.appendChild(textarea);
+                textarea.select();
                 try {
-                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                        await navigator.clipboard.writeText(text);
-                    } else {
-                        // طريقة قديمة احتياطية
-                        const temp = document.createElement('textarea');
-                        temp.value = text;
-                        document.body.appendChild(temp);
-                        temp.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(temp);
-                    }
-
-                    btn.classList.add('copied');
-                    btn.textContent = 'تم النسخ ✓';
-
-                    setTimeout(() => {
-                        btn.textContent = originalLabel;
-                        btn.classList.remove('copied');
-                    }, 1500);
-                } catch (err) {
-                    console.error('Copy failed', err);
-                    btn.textContent = 'خطأ!';
-                    setTimeout(() => {
-                        btn.textContent = originalLabel;
-                    }, 1500);
+                    document.execCommand("copy");
+                } catch (e) {
+                    // نتجاهل الخطأ، فقط نعرض الرسالة
                 }
-            });
-        });
-    </script>
+                document.body.removeChild(textarea);
+                showCopied();
+            }
+        }
 
+        function showCopied() {
+            const alertBox = document.createElement("div");
+            alertBox.textContent = "✔ تم النسخ";
+            alertBox.className = "copy-alert";
+            document.body.appendChild(alertBox);
+
+            setTimeout(() => {
+                alertBox.remove();
+            }, 1200);
+        }
+    </script>
 </body>
 </html>
