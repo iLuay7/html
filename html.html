@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>جميع حساباتي البنكية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: #020617;
+            border-radius: 18px;
+            padding: 24px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        h1 {
+            margin-top: 0;
+            margin-bottom: 4px;
+            font-size: 1.5rem;
+        }
+        p.subtitle {
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+        .bank {
+            margin-bottom: 14px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid #1f2937;
+            background: #020617;
+        }
+        .bank-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #f97316;
+        }
+        .label {
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+        .value {
+            font-size: 0.95rem;
+        }
+        .note {
+            margin-top: 14px;
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>جميع حساباتي البنكية</h1>
+    <p class="subtitle">اختر أي حساب وحوّل عليه مباشرة من تطبيق بنكك.</p>
+
+    <div class="bank">
+        <div class="bank-name">البنك الراجحي</div>
+        <div class="label">اسم المستفيد:</div>
+        <div class="value">عمرو محمد أحمد</div>
+        <div class="label">رقم الحساب:</div>
+        <div class="value">1234567890</div>
+        <div class="label">رقم الآيبان (IBAN):</div>
+        <div class="value">SA00 0000 0000 0000 0000 0000</div>
+    </div>
+
+    <div class="bank">
+        <div class="bank-name">البنك الأهلي السعودي</div>
+        <div class="label">اسم المستفيد:</div>
+        <div class="value">عمرو محمد أحمد</div>
+        <div class="label">رقم الحساب:</div>
+        <div class="value">9876543210</div>
+        <div class="label">رقم الآيبان (IBAN):</div>
+        <div class="value">SA11 1111 1111 1111 1111 1111</div>
+    </div>
+
+    <p class="note">
+        الرجاء التأكد من تطابق اسم المستفيد والآيبان قبل التحويل. أي استفسار تواصل معي على الواتساب.
+    </p>
+</div>
+</body>
+</html>
