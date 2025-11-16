@@ -1,168 +1,82 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جميع حساباتي البنكية</title>
-
-    <!-- ربط ملف التنسيقات الخارجي -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <!-- شمس متوهجة -->
     <div class="sun"></div>
 
-    <!-- فقاعات متحركة في الخلفية -->
+    <!-- فقاعات متحركة -->
     <div class="bubbles">
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
     </div>
 
-    <!-- البطاقة الرئيسية -->
     <div class="card">
         <h1>جميع حساباتي البنكية</h1>
-        <p class="subtitle">
-            اختر أي حساب وادخل عليه مباشرة من تطبيق بنكك أو تطبيق البنك.
-        </p>
+        <p class="subtitle">اختر أي حساب وادخل عليه مباشرة من تطبيق بنكك أو تطبيق البنك.</p>
 
-        <!-- البنك الراجحي -->
+        <!-- الراجحي -->
         <div class="bank">
             <div class="bank-name">البنك الراجحي</div>
 
             <div class="label">اسم المستفيد:</div>
             <div class="value">عمرو محمد أحمد</div>
 
+            <div class="label">رقم الحساب:</div>
             <div class="copy-row">
-                <div class="label">رقم الحساب:</div>
-                <button class="copy-btn" onclick="copyText('1234567890')">
-                    نسخ
-                </button>
+                <span class="value" id="acc1">1234567890</span>
+                <button class="copy-btn" onclick="copyText('acc1')">نسخ</button>
             </div>
-            <div class="value selectable">1234567890</div>
 
+            <div class="label">رقم الآيبان (IBAN):</div>
             <div class="copy-row">
-                <div class="label">رقم الآيبان (IBAN):</div>
-                <button class="copy-btn" onclick="copyText('SA00 0000 0000 0000 0000 0000')">
-                    نسخ
-                </button>
-            </div>
-            <div class="value selectable">
-                SA00 0000 0000 0000 0000 0000
+                <span class="value" id="iban1">SA00 0000 0000 0000 0000 0000</span>
+                <button class="copy-btn" onclick="copyText('iban1')">نسخ</button>
             </div>
         </div>
 
-        <!-- البنك الأهلي السعودي -->
+        <!-- الأهلي -->
         <div class="bank">
             <div class="bank-name">البنك الأهلي السعودي</div>
 
             <div class="label">اسم المستفيد:</div>
             <div class="value">عمرو محمد أحمد</div>
 
+            <div class="label">رقم الحساب:</div>
             <div class="copy-row">
-                <div class="label">رقم الحساب:</div>
-                <button class="copy-btn" onclick="copyText('9876543210')">
-                    نسخ
-                </button>
+                <span class="value" id="acc2">9876543210</span>
+                <button class="copy-btn" onclick="copyText('acc2')">نسخ</button>
             </div>
-            <div class="value selectable">9876543210</div>
 
+            <div class="label">رقم الآيبان (IBAN):</div>
             <div class="copy-row">
-                <div class="label">رقم الآيبان (IBAN):</div>
-                <button class="copy-btn" onclick="copyText('SA11 1111 1111 1111 1111 1111')">
-                    نسخ
-                </button>
-            </div>
-            <div class="value selectable">
-                SA11 1111 1111 1111 1111 1111
+                <span class="value" id="iban2">SA11 1111 1111 1111 1111 1111</span>
+                <button class="copy-btn" onclick="copyText('iban2')">نسخ</button>
             </div>
         </div>
 
         <p class="note">
-            الرجاء التأكد من تطابق اسم المستفيد ورقم الآيبان قبل تنفيذ التحويل.
-            لأي استفسار يرجى التواصل معي على الواتساب.
+            الرجاء التأكد من تطابق اسم المستفيد ورقم الآيبان قبل تنفيذ التحويل. لأي استفسار يرجى التواصل معي على الواتساب.
         </p>
     </div>
 
-    <script>
-        // ======================
-        // دبل كلك / دبل تاب لإخفاء الفقاعة
-        // ======================
-        const bubbles = document.querySelectorAll(".bubble");
+<script>
+function copyText(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+    alert("تم نسخ: " + text);
+}
+</script>
 
-        bubbles.forEach((bubble) => {
-            // دبل كلك على الكمبيوتر
-            bubble.addEventListener("dblclick", () => hideBubble(bubble));
-
-            // دبل تاب على الجوال
-            let lastTap = 0;
-            bubble.addEventListener("touchend", (e) => {
-                const now = Date.now();
-                const diff = now - lastTap;
-                if (diff > 0 && diff < 350) {
-                    e.preventDefault();
-                    hideBubble(bubble);
-                }
-                lastTap = now;
-            });
-        });
-
-        function hideBubble(bubble) {
-            bubble.classList.add("hidden-bubble");
-            setTimeout(() => {
-                bubble.style.display = "none";
-            }, 400);
-        }
-
-        // ======================
-        // نسخ النص إلى الحافظة + رسالة تم النسخ
-        // ======================
-        function copyText(text) {
-            // دعم navigator.clipboard (جديد) + طريقة احتياطية قديمة
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text)
-                    .then(showCopied)
-                    .catch(showCopied);
-            } else {
-                const textarea = document.createElement("textarea");
-                textarea.value = text;
-                textarea.style.position = "fixed";
-                textarea.style.opacity = "0";
-                document.body.appendChild(textarea);
-                textarea.select();
-                try {
-                    document.execCommand("copy");
-                } catch (e) {
-                    // نتجاهل الخطأ، فقط نعرض الرسالة
-                }
-                document.body.removeChild(textarea);
-                showCopied();
-            }
-        }
-
-        function showCopied() {
-            const alertBox = document.createElement("div");
-            alertBox.textContent = "✔ تم النسخ";
-            alertBox.className = "copy-alert";
-            document.body.appendChild(alertBox);
-
-            setTimeout(() => {
-                alertBox.remove();
-            }, 1200);
-        }
-    </script>
 </body>
 </html>
