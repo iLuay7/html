@@ -6,12 +6,13 @@
     <title>جميع حساباتي البنكية</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- شمس متوهجة في الزاوية -->
+    <!-- شمس متوهجة -->
     <div class="sun"></div>
 
-    <!-- فقاعات متحركة خفيفة في الخلفية -->
+    <!-- فقاعات متحركة -->
     <div class="bubbles">
         <div class="bubble"></div>
         <div class="bubble"></div>
@@ -21,72 +22,72 @@
         <div class="bubble"></div>
         <div class="bubble"></div>
         <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
     </div>
 
-    <!-- البطاقة الرئيسية -->
     <div class="card">
         <h1>جميع حساباتي البنكية</h1>
-        <p class="subtitle">اختر أي حساب وادخل عليه مباشرة من تطبيق بنكك أو تطبيق البنك.</p>
+        <p class="subtitle">اختر أي حساب وادخل عليه مباشرة من تطبيق بنكك.</p>
 
         <!-- بنك الراجحي -->
         <div class="bank">
-            <div class="bank-header bank-rajhi">
-                <span class="bank-title">البنك الراجحي</span>
+            <div class="bank-name">البنك الراجحي</div>
+
+            <div class="label">اسم المستفيد:</div>
+            <div class="value">عمرو محمد أحمد</div>
+
+            <div class="label">رقم الحساب:</div>
+            <div class="copy-row">
+                <div class="value" id="rajhi-account">1234567890</div>
+                <button class="copy-btn" data-copy="rajhi-account">نسخ</button>
             </div>
 
-            <div class="row">
-                <span class="label">اسم المستفيد:</span>
-                <span class="value">عمرو محمد أحمد</span>
-            </div>
-
-            <div class="row">
-                <span class="label">رقم الحساب:</span>
-                <span class="value">1234567890</span>
-            </div>
-
-            <div class="row">
-                <span class="label">رقم الآيبان (IBAN):</span>
-                <span class="value iban">SA00 0000 0000 0000 0000 0000</span>
+            <div class="label">رقم الآيبان (IBAN):</div>
+            <div class="copy-row">
+                <div class="value" id="rajhi-iban">SA00 0000 0000 0000 0000 0000</div>
+                <button class="copy-btn" data-copy="rajhi-iban">نسخ</button>
             </div>
         </div>
 
-        <!-- البنك الأهلي السعودي -->
+        <!-- البنك الأهلي -->
         <div class="bank">
-            <div class="bank-header bank-ahli">
-                <span class="bank-title">البنك الأهلي السعودي</span>
+            <div class="bank-name">البنك الأهلي السعودي</div>
+
+            <div class="label">اسم المستفيد:</div>
+            <div class="value">عمرو محمد أحمد</div>
+
+            <div class="label">رقم الحساب:</div>
+            <div class="copy-row">
+                <div class="value" id="ahli-account">9876543210</div>
+                <button class="copy-btn" data-copy="ahli-account">نسخ</button>
             </div>
 
-            <div class="row">
-                <span class="label">اسم المستفيد:</span>
-                <span class="value">عمرو محمد أحمد</span>
-            </div>
-
-            <div class="row">
-                <span class="label">رقم الحساب:</span>
-                <span class="value">9876543210</span>
-            </div>
-
-            <div class="row">
-                <span class="label">رقم الآيبان (IBAN):</span>
-                <span class="value iban">SA11 1111 1111 1111 1111 1111</span>
+            <div class="label">رقم الآيبان (IBAN):</div>
+            <div class="copy-row">
+                <div class="value" id="ahli-iban">SA11 1111 1111 1111 1111 1111</div>
+                <button class="copy-btn" data-copy="ahli-iban">نسخ</button>
             </div>
         </div>
 
         <p class="note">
-            الرجاء التأكد من تطابق اسم المستفيد ورقم الآيبان قبل تنفيذ التحويل.  
-            لأي استفسار يرجى التواصل معي على الواتساب.
+            الرجاء التأكد من تطابق اسم المستفيد والآيبان قبل التحويل.  
+            لأي استفسار تواصل معي على الواتساب.
         </p>
     </div>
 
     <script>
-        // جعل الفقاعة تختفي عند دبل كلك / دبل تاب
+        // ====== إخفاء الفقاعات عند الدبل كلك / الدبل تاب ======
         const bubbles = document.querySelectorAll('.bubble');
 
         bubbles.forEach(bubble => {
-            // دبل كلك على الكمبيوتر
             bubble.addEventListener('dblclick', () => hideBubble(bubble));
 
-            // دبل تاب على الجوال
             let lastTap = 0;
             bubble.addEventListener('touchend', (e) => {
                 const currentTime = new Date().getTime();
@@ -105,6 +106,49 @@
                 bubble.style.display = 'none';
             }, 400);
         }
+
+        // ====== أزرار النسخ للحسابات والآيبانات ======
+        const copyButtons = document.querySelectorAll('.copy-btn');
+
+        copyButtons.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const targetId = btn.dataset.copy;
+                const el = document.getElementById(targetId);
+                if (!el) return;
+
+                const text = el.innerText.trim();
+                const originalLabel = btn.textContent;
+
+                // نحاول نستخدم API الحديث أولاً
+                try {
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        await navigator.clipboard.writeText(text);
+                    } else {
+                        // طريقة قديمة احتياطية
+                        const temp = document.createElement('textarea');
+                        temp.value = text;
+                        document.body.appendChild(temp);
+                        temp.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(temp);
+                    }
+
+                    btn.classList.add('copied');
+                    btn.textContent = 'تم النسخ ✓';
+
+                    setTimeout(() => {
+                        btn.textContent = originalLabel;
+                        btn.classList.remove('copied');
+                    }, 1500);
+                } catch (err) {
+                    console.error('Copy failed', err);
+                    btn.textContent = 'خطأ!';
+                    setTimeout(() => {
+                        btn.textContent = originalLabel;
+                    }, 1500);
+                }
+            });
+        });
     </script>
 
 </body>
