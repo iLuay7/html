@@ -1,43 +1,86 @@
-/* صف يحتوي الرقم + زر النسخ */
-.copy-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+/* خلفية الموقع العامة */
+body {
+    font-family: "Tajawal", sans-serif;
+    background: linear-gradient(135deg, #0a1a3f, #000);
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    text-align: center;
 }
 
-/* علشان الأرقام تبان مرتبة حتى مع اتجاه RTL */
-.copy-row .value {
-    direction: ltr;
-    text-align: left;
+/* الكرت الرئيسي */
+.card {
+    width: 60%;
+    margin: 50px auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* العنوان */
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+/* النص تحت العنوان */
+.subtitle {
+    color: #ccc;
+    margin-bottom: 30px;
+}
+
+/* صندوق كل بنك */
+.bank {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+}
+
+/* اسم البنك */
+.bank-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #00ffcc;
+    margin-bottom: 15px;
+}
+
+/* تسميات */
+.label {
+    color: #bbb;
+    font-size: 14px;
+}
+
+/* القيم */
+.value {
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
 /* زر النسخ */
 .copy-btn {
-    padding: 4px 12px;
-    border-radius: 999px;
+    background-color: orange;
     border: none;
-    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 10px;
     cursor: pointer;
-    background: linear-gradient(135deg, #fbbf24, #f97316);
-    color: #111827;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    white-space: nowrap;
+    margin-bottom: 10px;
+    transition: 0.2s;
 }
 
 .copy-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+    background-color: #ffb300;
+    transform: scale(1.05);
 }
 
 .copy-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transform: scale(0.95);
 }
 
-/* شكل الزر بعد النسخ */
-.copy-btn.copied {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #f9fafb;
+/* ملاحظة أسفل الصفحة */
+.note {
+    margin-top: 20px;
+    color: #ccc;
 }
