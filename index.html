@@ -2,66 +2,70 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جميع حساباتي البنكية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <!-- شمس متوهجة -->
-    <div class="sun"></div>
-
-    <!-- فقاعات متحركة -->
-    <div class="bubbles">
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-    </div>
-
+<div class="page-bg">
     <div class="card">
         <h1>جميع حساباتي البنكية</h1>
         <p class="subtitle">اختر أي حساب وادخل عليه مباشرة من تطبيق بنكك أو تطبيق البنك.</p>
 
-        <!-- الراجحي -->
+        <!-- Bank 1 -->
         <div class="bank">
-            <div class="bank-name">البنك الراجحي</div>
-
-            <div class="label">اسم المستفيد:</div>
-            <div class="value">عمرو محمد أحمد</div>
-
-            <div class="label">رقم الحساب:</div>
-            <div class="copy-row">
-                <span class="value" id="acc1">1234567890</span>
-                <button class="copy-btn" onclick="copyText('acc1')">نسخ</button>
+            <div class="bank-header">
+                <span class="bank-name">البنك الراجحي</span>
             </div>
 
-            <div class="label">رقم الآيبان (IBAN):</div>
-            <div class="copy-row">
-                <span class="value" id="iban1">SA00 0000 0000 0000 0000 0000</span>
-                <button class="copy-btn" onclick="copyText('iban1')">نسخ</button>
+            <div class="row">
+                <span class="label">اسم المستفيد:</span>
+                <span class="value">عمرو محمد أحمد</span>
+            </div>
+
+            <div class="row copy-row">
+                <div class="copy-text">
+                    <span class="label">رقم الحساب:</span>
+                    <span class="value" id="rajhi-account">1234567890</span>
+                </div>
+                <button class="copy-btn" data-target="rajhi-account">نسخ</button>
+            </div>
+
+            <div class="row copy-row">
+                <div class="copy-text">
+                    <span class="label">رقم الآيبان (IBAN):</span>
+                    <span class="value" id="rajhi-iban">SA00 0000 0000 0000 0000 0000</span>
+                </div>
+                <button class="copy-btn" data-target="rajhi-iban">نسخ</button>
             </div>
         </div>
 
-        <!-- الأهلي -->
+        <!-- Bank 2 -->
         <div class="bank">
-            <div class="bank-name">البنك الأهلي السعودي</div>
-
-            <div class="label">اسم المستفيد:</div>
-            <div class="value">عمرو محمد أحمد</div>
-
-            <div class="label">رقم الحساب:</div>
-            <div class="copy-row">
-                <span class="value" id="acc2">9876543210</span>
-                <button class="copy-btn" onclick="copyText('acc2')">نسخ</button>
+            <div class="bank-header">
+                <span class="bank-name">البنك الأهلي السعودي</span>
             </div>
 
-            <div class="label">رقم الآيبان (IBAN):</div>
-            <div class="copy-row">
-                <span class="value" id="iban2">SA11 1111 1111 1111 5555 1111</span>
-                <button class="copy-btn" onclick="copyText('iban2')">نسخ</button>
+            <div class="row">
+                <span class="label">اسم المستفيد:</span>
+                <span class="value">عمرو محمد أحمد</span>
+            </div>
+
+            <div class="row copy-row">
+                <div class="copy-text">
+                    <span class="label">رقم الحساب:</span>
+                    <span class="value" id="ahli-account">9876543210</span>
+                </div>
+                <button class="copy-btn" data-target="ahli-account">نسخ</button>
+            </div>
+
+            <div class="row copy-row">
+                <div class="copy-text">
+                    <span class="label">رقم الآيبان (IBAN):</span>
+                    <span class="value" id="ahli-iban">SA11 1111 1111 1111 1111 1111</span>
+                </div>
+                <button class="copy-btn" data-target="ahli-iban">نسخ</button>
             </div>
         </div>
 
@@ -69,13 +73,53 @@
             الرجاء التأكد من تطابق اسم المستفيد ورقم الآيبان قبل تنفيذ التحويل. لأي استفسار يرجى التواصل معي على الواتساب.
         </p>
     </div>
+</div>
 
 <script>
-function copyText(id) {
-    const text = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(text);
-    alert("تم نسخ: " + text);
-}
+    function handleCopyClick(event) {
+        const button = event.currentTarget;
+        const targetId = button.getAttribute("data-target");
+        const targetElement = document.getElementById(targetId);
+
+        if (!targetElement) return;
+
+        const text = targetElement.textContent.trim();
+
+        if (!navigator.clipboard) {
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            showCopiedState(button);
+            return;
+        }
+
+        navigator.clipboard.writeText(text).then(
+            function () {
+                showCopiedState(button);
+            },
+            function () {
+                alert("لم يتم النسخ، حاول مرة أخرى.");
+            }
+        );
+    }
+
+    function showCopiedState(button) {
+        const originalText = button.textContent;
+        button.textContent = "تم النسخ ✓";
+        button.classList.add("copied");
+
+        setTimeout(function () {
+            button.textContent = originalText;
+            button.classList.remove("copied");
+        }, 1500);
+    }
+
+    document.querySelectorAll(".copy-btn").forEach(function (btn) {
+        btn.addEventListener("click", handleCopyClick);
+    });
 </script>
 
 </body>
