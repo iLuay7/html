@@ -8,20 +8,10 @@
 </head>
 <body>
 
-    <!-- background music -->
-    <audio id="bg-music" loop playsinline>
-        <source src="music.mp3" type="audio/mpeg" />
-    </audio>
-
-    <!-- copy explosion sound -->
+    <!-- copy sound only (coin / jump style) -->
     <audio id="copy-sound" preload="auto">
         <source src="explosion.mp3" type="audio/mpeg" />
     </audio>
-
-    <!-- music toggle button -->
-    <button class="music-toggle" type="button" aria-label="Toggle background music">
-        🎵
-    </button>
 
     <!-- sun glow -->
     <div class="sun"></div>
@@ -95,7 +85,7 @@
     </div>
 
     <script>
-        // copy buttons + explosion sound
+        // copy buttons + sound
         const copySound = document.getElementById("copy-sound");
 
         document.querySelectorAll(".copy-btn").forEach(function (btn) {
@@ -145,38 +135,6 @@
                 // ignore
             }
         }
-
-        // background music
-        const audio = document.getElementById("bg-music");
-        const toggleBtn = document.querySelector(".music-toggle");
-        audio.volume = 0.08;
-        let isPlaying = false;
-
-        function enableAutoPlay() {
-            if (!isPlaying) {
-                audio.play().then(function () {
-                    isPlaying = true;
-                    toggleBtn.classList.add("music-toggle--on");
-                }).catch(function () {});
-            }
-        }
-
-        window.addEventListener("click", enableAutoPlay, { once: true });
-        window.addEventListener("touchstart", enableAutoPlay, { once: true });
-
-        toggleBtn.addEventListener("click", function (event) {
-            event.stopPropagation();
-            if (audio.paused) {
-                audio.play().then(function () {
-                    isPlaying = true;
-                    toggleBtn.classList.add("music-toggle--on");
-                }).catch(function () {});
-            } else {
-                audio.pause();
-                isPlaying = false;
-                toggleBtn.classList.remove("music-toggle--on");
-            }
-        });
     </script>
 </body>
 </html>
