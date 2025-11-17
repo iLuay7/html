@@ -13,6 +13,11 @@
         <source src="music.mp3" type="audio/mpeg" />
     </audio>
 
+    <!-- copy explosion sound -->
+    <audio id="copy-sound" preload="auto">
+        <source src="explosion.mp3" type="audio/mpeg" />
+    </audio>
+
     <!-- music toggle button -->
     <button class="music-toggle" type="button" aria-label="Toggle background music">
         🎵
@@ -90,7 +95,9 @@
     </div>
 
     <script>
-        // copy buttons
+        // copy buttons + explosion sound
+        const copySound = document.getElementById("copy-sound");
+
         document.querySelectorAll(".copy-btn").forEach(function (btn) {
             btn.addEventListener("click", function () {
                 const targetId = btn.getAttribute("data-copy");
@@ -106,11 +113,15 @@
                     document.execCommand("copy");
                     document.body.removeChild(tempInput);
                     showCopiedState(btn);
+                    playCopySound();
                     return;
                 }
 
                 navigator.clipboard.writeText(text).then(function () {
                     showCopiedState(btn);
+                    playCopySound();
+                }).catch(function () {
+                    playCopySound();
                 });
             });
         });
@@ -123,6 +134,16 @@
                 btn.textContent = originalText;
                 btn.classList.remove("copied");
             }, 1200);
+        }
+
+        function playCopySound() {
+            if (!copySound) return;
+            try {
+                copySound.currentTime = 0;
+                copySound.play().catch(function () {});
+            } catch (e) {
+                // ignore
+            }
         }
 
         // background music
