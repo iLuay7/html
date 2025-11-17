@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <!-- copy sound only (coin / jump style) -->
+    <!-- copy sound (coin / jump style) -->
     <audio id="copy-sound" preload="auto">
         <source src="explosion.mp3" type="audio/mpeg" />
     </audio>
@@ -84,6 +84,41 @@
         </p>
     </div>
 
+    <!-- comments section -->
+    <div class="comments-card">
+        <div class="comments-header">
+            <h2 class="comments-title">التعليقات والتقييم</h2>
+            <div class="comments-subtitle">اكتب رأيك وقيم التجربة بالنجمات.</div>
+        </div>
+
+        <form id="comment-form" class="comment-form">
+            <div class="form-row">
+                <label for="comment-name">الاسم</label>
+                <input id="comment-name" type="text" placeholder="مثال: أبو محمد" />
+            </div>
+
+            <div class="form-row">
+                <label>التقييم</label>
+                <div class="stars" id="rating-stars">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="comment-text">التعليق</label>
+                <textarea id="comment-text" rows="3" placeholder="اكتب تعليقك هنا..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-comment-btn">إرسال التقييم</button>
+        </form>
+
+        <div id="comments-list" class="comments-list"></div>
+    </div>
+
     <script>
         // copy buttons + sound
         const copySound = document.getElementById("copy-sound");
@@ -131,10 +166,120 @@
             try {
                 copySound.currentTime = 0;
                 copySound.play().catch(function () {});
+            } catch (e) {}
+        }
+
+        // comments (localStorage based)
+        const commentsKey = "bank-comments-v1";
+        let comments = loadComments();
+
+        function loadComments() {
+            const saved = localStorage.getItem(commentsKey);
+            if (!saved) return [];
+            try {
+                return JSON.parse(saved);
             } catch (e) {
-                // ignore
+                return [];
             }
         }
+
+        function saveComments() {
+            localStorage.setItem(commentsKey, JSON.stringify(comments));
+        }
+
+        function renderComments() {
+            const container = document.getElementById("comments-list");
+            container.innerHTML = "";
+
+            if (!comments || comments.length === 0) {
+                container.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد.</p>';
+                return;
+            }
+
+            comments.forEach(function (c) {
+                const item = document.createElement("div");
+                item.className = "comment-item";
+
+                const header = document.createElement("div");
+                header.className = "comment-header";
+
+                const nameEl = document.createElement("div");
+                nameEl.className = "comment-name";
+                nameEl.textContent = c.name || "زائر";
+
+                const starsEl = document.createElement("div");
+                starsEl.className = "comment-stars";
+                const rating = Number(c.rating || 0);
+                let starsText = "";
+                for (let i = 1; i <= 5; i++) {
+                    starsText += i <= rating ? "★" : "☆";
+                }
+                starsEl.textContent = starsText;
+
+                header.appendChild(nameEl);
+                header.appendChild(starsEl);
+
+                const body = document.createElement("div");
+                body.className = "comment-text";
+                body.textContent = c.text || "";
+
+                item.appendChild(header);
+                item.appendChild(body);
+
+                container.appendChild(item);
+            });
+        }
+
+        let currentRating = 5;
+        const starElems = document.querySelectorAll(".star");
+
+        function updateStarView() {
+            starElems.forEach(function (star) {
+                const value = Number(star.getAttribute("data-value"));
+                star.classList.toggle("selected", value <= currentRating);
+            });
+        }
+
+        starElems.forEach(function (star) {
+            star.addEventListener("click", function () {
+                const value = Number(star.getAttribute("data-value"));
+                currentRating = value;
+                updateStarView();
+            });
+        });
+
+        updateStarView();
+        renderComments();
+
+        const commentForm = document.getElementById("comment-form");
+        const commentNameInput = document.getElementById("comment-name");
+        const commentTextInput = document.getElementById("comment-text");
+
+        commentForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const name = (commentNameInput.value || "").trim() || "زائر";
+            const text = (commentTextInput.value || "").trim();
+
+            if (!text) {
+                return;
+            }
+
+            const newComment = {
+                id: Date.now(),
+                name: name,
+                text: text,
+                rating: currentRating || 0
+            };
+
+            comments.unshift(newComment);
+            saveComments();
+            renderComments();
+
+            commentForm.reset();
+            currentRating = 5;
+            updateStarView();
+        });
     </script>
 </body>
 </html>
