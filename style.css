@@ -522,12 +522,28 @@ h1 {
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.7);
 }
 
+.submit-comment-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 /* comments list */
 .comments-list {
     margin-top: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.comments-status {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #9aa6c7;
+    min-height: 18px;
+}
+
+.comments-status.error {
+    color: #f87171;
 }
 
 .no-comments {

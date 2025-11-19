@@ -40,38 +40,38 @@
     <!-- Header -->
     <div class="header-section">
         <h1>جميع حساباتي البنكية</h1>
-        <div class="subtitle">اختر البنك لعرض التفاصيل</div>
+        <div class="subtitle">اضغط على البنك للاطلاع على التفاصيل ونسخ البيانات بسرعة.</div>
     </div>
 
     <!-- Bank Grid -->
     <div class="bank-grid" id="bank-grid">
         <div class="bank-box" data-target="modal-rajhi">
             <div class="box-icon">الراجحي</div>
-            <div class="box-name">الراجحي</div>
+            <div class="box-name">مصرف الراجحي</div>
         </div>
         <div class="bank-box" data-target="modal-alinma">
             <div class="box-icon">الإنماء</div>
-            <div class="box-name">الإنماء</div>
+            <div class="box-name">مصرف الإنماء</div>
         </div>
         <div class="bank-box" data-target="modal-albilad">
             <div class="box-icon">البلاد</div>
-            <div class="box-name">البلاد</div>
+            <div class="box-name">بنك البلاد</div>
         </div>
         <div class="bank-box" data-target="modal-barq">
             <div class="box-icon">برق</div>
-            <div class="box-name">برق</div>
+            <div class="box-name">برق (Barq)</div>
         </div>
         <div class="bank-box" data-target="modal-stc">
             <div class="box-icon">STC</div>
             <div class="box-name">STC Pay</div>
         </div>
         <div class="bank-box" data-target="modal-mobily">
-            <div class="box-icon">موبايلي</div>
-            <div class="box-name">موبايلي</div>
+            <div class="box-icon">Mobily</div>
+            <div class="box-name">Mobily Pay</div>
         </div>
         <div class="bank-box" data-target="modal-d360">
             <div class="box-icon">D360</div>
-            <div class="box-name">D360</div>
+            <div class="box-name">D360 Bank</div>
         </div>
     </div>
 
@@ -91,7 +91,7 @@
         </div>
         <div class="row copy-row">
             <div class="copy-text">
-                <span class="label">الآيبان:</span>
+                <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-rajhi">SA0000000000000000000000</span>
             </div>
             <button class="copy-btn" data-copy="iban-rajhi">نسخ</button>
@@ -117,10 +117,17 @@
         </div>
         <div class="row copy-row">
             <div class="copy-text">
-                <span class="label">الآيبان:</span>
+                <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-alinma">SA0000000000000000000000</span>
             </div>
             <button class="copy-btn" data-copy="iban-alinma">نسخ</button>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">رقم الحساب:</span>
+                <span class="value" id="acc-alinma">00000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="acc-alinma">نسخ</button>
         </div>
     </div>
 
@@ -136,10 +143,17 @@
         </div>
         <div class="row copy-row">
             <div class="copy-text">
-                <span class="label">الآيبان:</span>
+                <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-albilad">SA0000000000000000000000</span>
             </div>
             <button class="copy-btn" data-copy="iban-albilad">نسخ</button>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">رقم الحساب:</span>
+                <span class="value" id="acc-albilad">00000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="acc-albilad">نسخ</button>
         </div>
     </div>
 
@@ -155,10 +169,17 @@
         </div>
         <div class="row copy-row">
             <div class="copy-text">
-                <span class="label">الآيبان:</span>
+                <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-barq">SA0000000000000000000000</span>
             </div>
             <button class="copy-btn" data-copy="iban-barq">نسخ</button>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">رقم الحساب:</span>
+                <span class="value" id="acc-barq">00000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="acc-barq">نسخ</button>
         </div>
     </div>
 
@@ -174,10 +195,17 @@
         </div>
         <div class="row copy-row">
             <div class="copy-text">
-                <span class="label">الآيبان:</span>
+                <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-stc">SA0000000000000000000000</span>
             </div>
             <button class="copy-btn" data-copy="iban-stc">نسخ</button>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">رقم الحساب:</span>
+                <span class="value" id="acc-stc">00000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="acc-stc">نسخ</button>
         </div>
     </div>
 
@@ -193,10 +221,17 @@
         </div>
         <div class="row copy-row">
             <div class="copy-text">
-                <span class="label">الآيبان:</span>
+                <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-mobily">SA0000000000000000000000</span>
             </div>
             <button class="copy-btn" data-copy="iban-mobily">نسخ</button>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">رقم الحساب:</span>
+                <span class="value" id="acc-mobily">00000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="acc-mobily">نسخ</button>
         </div>
     </div>
 
@@ -212,19 +247,26 @@
         </div>
         <div class="row copy-row">
             <div class="copy-text">
-                <span class="label">الآيبان:</span>
+                <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-d360">SA0000000000000000000000</span>
             </div>
             <button class="copy-btn" data-copy="iban-d360">نسخ</button>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">رقم الحساب:</span>
+                <span class="value" id="acc-d360">00000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="acc-d360">نسخ</button>
         </div>
     </div>
 
     <!-- Footer Note -->
     <div class="footer-note">
         <p class="note">
-            ملاحظة: عند التحويل، يرجى التأكد من تطابق الاسم ورقم الحساب.
-            <br>
-            الرجاء إرسال صورة الإيصال عبر الواتساب.
+            ملاحظة: عند التحويل يرجى التأكد من تطابق الاسم ورقم الحساب، ثم مشاركة إيصال التحويل.
+            <br />
+            في حال احتجت إلى إضافة بنك جديد أو تحديث الأرقام، راسلني على الواتساب أو البريد.
         </p>
     </div>
 
@@ -232,31 +274,39 @@
     <div class="comments-card">
         <div class="comments-header">
             <h2 class="comments-title">التعليقات والتقييم</h2>
-            <div class="comments-subtitle">اكتب رأيك وقيم التجربة بالنجمات.</div>
+            <div class="comments-subtitle">اكتب رأيك بعد تجربة الخدمة، فملاحظاتك تساعدني على التطوير.</div>
         </div>
 
         <form id="comment-form" class="comment-form">
             <div class="form-row">
                 <label for="comment-name">الاسم</label>
-                <input id="comment-name" type="text" placeholder="مثال: أبو محمد" />
+                <input id="comment-name" type="text" placeholder="مثال: خالد بن محمد" />
             </div>
 
             <div class="form-row">
                 <label>التقييم</label>
                 <div class="stars" id="rating-stars">
-                    <span class="star" data-value="1">★</span>
-                    <span class="star" data-value="2">★</span>
-                    <span class="star" data-value="3">★</span>
-                    <span class="star" data-value="4">★</span>
-                    <span class="star" data-value="5">★</span>
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
                 </div>
             </div>
 
             <div class="form-row">
                 <label for="comment-text">التعليق</label>
-                <textarea id="comment-text" rows="3" placeholder="اكتب تعليقك هنا..."></textarea>
+                <textarea id="comment-text" rows="3" placeholder="اكتب ملاحظاتك أو اقتراحك هنا..." required></textarea>
             </div>
+
+            <button type="submit" class="submit-comment-btn">إرسال التعليق</button>
         </form>
+
+        <div id="comments-status" class="comments-status" aria-live="polite"></div>
+
+        <div id="comments-list" class="comments-list">
+            <p class="no-comments">لا توجد تعليقات بعد.</p>
+        </div>
     </div>
 
     <script>
@@ -323,7 +373,7 @@
 
         function showCopiedState(btn) {
             const originalText = btn.textContent;
-            btn.textContent = "✓";
+            btn.textContent = "تم!";
             btn.classList.add("copied");
             setTimeout(function () {
                 btn.textContent = originalText;
@@ -339,44 +389,25 @@
             } catch (e) { }
         }
 
-        // comments (localStorage based)
-        const commentsKey = "bank-comments-v1";
-        let comments = loadComments();
+        // comments (Google Forms backend)
+        const commentsApiUrl = "https://script.google.com/macros/s/REPLACE_WITH_YOUR_DEPLOYMENT_ID/exec"; // حدّث الرابط بعد نشر Apps Script
+        const commentsListEl = document.getElementById("comments-list");
+        const commentsStatusEl = document.getElementById("comments-status");
+        let comments = [];
 
-        function loadComments() {
-            const saved = localStorage.getItem(commentsKey);
-            if (!saved) return [];
-            try {
-                return JSON.parse(saved);
-            } catch (e) {
-                return [];
-            }
-        }
-
-        function saveComments() {
-            localStorage.setItem(commentsKey, JSON.stringify(comments));
+        function setCommentsStatus(message, isError = false) {
+            if (!commentsStatusEl) return;
+            commentsStatusEl.textContent = message || "";
+            commentsStatusEl.classList.toggle("error", Boolean(isError));
         }
 
         function renderComments() {
-            const container = document.getElementById("comments-list");
-            // Create container if it doesn't exist inside comments-card
-            if (!container) {
-                const listDiv = document.createElement("div");
-                listDiv.id = "comments-list";
-                listDiv.className = "comments-list";
-                document.querySelector(".comments-card").appendChild(listDiv);
-                // Call render again
-                // But wait, I need to append it first.
-                // Let's just use the reference.
-                // Actually, I should add the container in the HTML above.
-            }
-            const list = document.getElementById("comments-list");
-            if (!list) return; // Should be there now
+            if (!commentsListEl) return;
 
-            list.innerHTML = "";
+            commentsListEl.innerHTML = "";
 
             if (!comments || comments.length === 0) {
-                list.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد.</p>';
+                commentsListEl.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد.</p>';
                 return;
             }
 
@@ -389,7 +420,7 @@
 
                 const nameEl = document.createElement("div");
                 nameEl.className = "comment-name";
-                nameEl.textContent = c.name || "زائر";
+                nameEl.textContent = c.name || "مستخدم مجهول";
 
                 const starsEl = document.createElement("div");
                 starsEl.className = "comment-stars";
@@ -399,15 +430,57 @@
                     starsText += i <= rating ? "★" : "☆";
                 }
                 starsEl.textContent = starsText;
+
                 header.appendChild(nameEl);
                 header.appendChild(starsEl);
+
                 const body = document.createElement("div");
                 body.className = "comment-text";
                 body.textContent = c.text || "";
+
                 item.appendChild(header);
                 item.appendChild(body);
-                list.appendChild(item);
+                commentsListEl.appendChild(item);
             });
+        }
+
+        async function fetchComments() {
+            if (!commentsApiUrl || commentsApiUrl.includes("REPLACE_WITH_YOUR_DEPLOYMENT_ID")) {
+                setCommentsStatus("⚠️ حدّث رابط Google Apps Script قبل تحميل التعليقات.", true);
+                renderComments();
+                return;
+            }
+            setCommentsStatus("جارٍ تحميل التعليقات...");
+            try {
+                const response = await fetch(commentsApiUrl, { method: "GET", cache: "no-store" });
+                if (!response.ok) throw new Error(`خطأ في جلب التعليقات (${response.status})`);
+                const data = await response.json();
+                comments = Array.isArray(data.comments) ? data.comments : [];
+                renderComments();
+                setCommentsStatus(comments.length ? "" : "ابدأ بكتابة أول تعليق.");
+            } catch (error) {
+                console.error(error);
+                setCommentsStatus("تعذر تحميل التعليقات الآن، تحقق من نشر Google Apps Script.", true);
+            }
+        }
+
+        async function sendCommentToGoogle(payload) {
+            if (!commentsApiUrl || commentsApiUrl.includes("REPLACE_WITH_YOUR_DEPLOYMENT_ID")) {
+                throw new Error("يرجى استبدال رابط Google Apps Script في الكود.");
+            }
+            const response = await fetch(commentsApiUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            if (!response.ok) {
+                throw new Error(`تعذر الاتصال بالخادم (${response.status})`);
+            }
+            const result = await response.json().catch(() => ({}));
+            if (result.success === false) {
+                throw new Error(result.message || "تعذر حفظ التعليق.");
+            }
+            return result;
         }
 
         let currentRating = 5;
@@ -427,37 +500,48 @@
         });
         updateStarView();
 
-        // Ensure comments list container exists
-        if (!document.getElementById("comments-list")) {
-            const listDiv = document.createElement("div");
-            listDiv.id = "comments-list";
-            listDiv.className = "comments-list";
-            document.querySelector(".comments-card").appendChild(listDiv);
-        }
         renderComments();
+        fetchComments();
 
         const commentForm = document.getElementById("comment-form");
         const commentNameInput = document.getElementById("comment-name");
         const commentTextInput = document.getElementById("comment-text");
-        commentForm.addEventListener("submit", function (e) {
+        const submitBtn = document.querySelector(".submit-comment-btn");
+        commentForm.addEventListener("submit", async function (e) {
             e.preventDefault();
-            const name = (commentNameInput.value || "").trim() || "زائر";
+            const name = (commentNameInput.value || "").trim() || "مستخدم مجهول";
             const text = (commentTextInput.value || "").trim();
             if (!text) {
+                setCommentsStatus("اكتب تعليقاً قبل الإرسال.", true);
                 return;
             }
             const newComment = {
-                id: Date.now(),
                 name: name,
                 text: text,
                 rating: currentRating || 0
             };
-            comments.unshift(newComment);
-            saveComments();
-            renderComments();
-            commentForm.reset();
-            currentRating = 5;
-            updateStarView();
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.dataset.originalText = submitBtn.textContent;
+                submitBtn.textContent = "جارٍ الإرسال...";
+            }
+            try {
+                setCommentsStatus("");
+                await sendCommentToGoogle(newComment);
+                setCommentsStatus("تم إرسال تعليقك بنجاح ✅");
+                commentForm.reset();
+                currentRating = 5;
+                updateStarView();
+                await fetchComments();
+            } catch (err) {
+                console.error(err);
+                setCommentsStatus(err.message || "تعذر إرسال التعليق، حاول مرة أخرى لاحقاً.", true);
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = submitBtn.dataset.originalText || "إرسال التعليق";
+                }
+            }
         });
     </script>
 </body>
