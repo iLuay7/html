@@ -1,11 +1,72 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8" />
-    <title>جميع حساباتي البنكية</title>
+    <title>بيانات التحويل والدفع</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
+    <style>
+        /* fallback to keep background dark even لو تعطل تحميل style.css */
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+            background: linear-gradient(135deg, #0a1a3a, #021122);
+            color: #ffffff;
+        }
+
+        /* force vertical stacked rectangular bank boxes */
+        .bank-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 14px !important;
+            align-items: stretch !important;
+            max-width: 760px;
+            margin: 0 auto 32px auto;
+            padding: 12px 16px;
+        }
+
+        .bank-box {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            background: rgba(6, 16, 39, 0.9) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 14px !important;
+            padding: 18px 18px !important;
+            gap: 10px !important;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35) !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            color: #e5edff !important;
+        }
+
+        .bank-box .box-icon {
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding-inline-end: 12px;
+        }
+
+        .bank-box .box-name {
+            font-size: 0.95rem;
+            color: #cdd6f0;
+            text-align: center;
+        }
+
+        /* ensure responsive on small screens */
+        @media (max-width: 420px) {
+            .bank-grid {
+                padding: 8px 10px;
+            }
+
+            .bank-box {
+                padding: 14px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -39,248 +100,248 @@
 
     <!-- Header -->
     <div class="header-section">
-        <h1>جميع حساباتي البنكية</h1>
-        <div class="subtitle">اضغط على البنك للاطلاع على التفاصيل ونسخ البيانات بسرعة.</div>
+        <h1>بيانات التحويل والدفع</h1>
+        <div class="subtitle">اختر مزود الخدمة وانسخ بيانات الحساب لإتمام تحويلك بسرعة.</div>
     </div>
 
     <!-- Bank Grid -->
     <div class="bank-grid" id="bank-grid">
-        <div class="bank-box" data-target="modal-rajhi">
+        <div class="bank-box" data-target="modal-rajhi" role="button" tabindex="0">
             <div class="box-icon">الراجحي</div>
-            <div class="box-name">مصرف الراجحي</div>
+            <div class="box-name">حساب مصرف الراجحي</div>
         </div>
-        <div class="bank-box" data-target="modal-alinma">
+        <div class="bank-box" data-target="modal-alinma" role="button" tabindex="0">
             <div class="box-icon">الإنماء</div>
-            <div class="box-name">مصرف الإنماء</div>
+            <div class="box-name">حساب بنك الإنماء</div>
         </div>
-        <div class="bank-box" data-target="modal-albilad">
+        <div class="bank-box" data-target="modal-albilad" role="button" tabindex="0">
             <div class="box-icon">البلاد</div>
-            <div class="box-name">بنك البلاد</div>
+            <div class="box-name">حساب بنك البلاد</div>
         </div>
-        <div class="bank-box" data-target="modal-barq">
+        <div class="bank-box" data-target="modal-barq" role="button" tabindex="0">
             <div class="box-icon">برق</div>
-            <div class="box-name">برق (Barq)</div>
+            <div class="box-name">محفظة برق (Barq)</div>
         </div>
-        <div class="bank-box" data-target="modal-stc">
+        <div class="bank-box" data-target="modal-stc" role="button" tabindex="0">
             <div class="box-icon">STC</div>
             <div class="box-name">STC Pay</div>
         </div>
-        <div class="bank-box" data-target="modal-mobily">
-            <div class="box-icon">Mobily</div>
+        <div class="bank-box" data-target="modal-mobily" role="button" tabindex="0">
+            <div class="box-icon">موبايلي</div>
             <div class="box-name">Mobily Pay</div>
         </div>
-        <div class="bank-box" data-target="modal-d360">
+        <div class="bank-box" data-target="modal-d360" role="button" tabindex="0">
             <div class="box-icon">D360</div>
             <div class="box-name">D360 Bank</div>
         </div>
     </div>
 
     <!-- Backdrop -->
-    <div class="backdrop" id="backdrop"></div>
+    <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 
     <!-- Modals -->
     <!-- Rajhi -->
-    <div class="card" id="modal-rajhi">
-        <button class="close-modal">&times;</button>
+    <div class="card" id="modal-rajhi" aria-hidden="true">
+        <button class="close-modal" type="button">&times;</button>
         <div class="bank-header">
-            <div class="bank-title">مصرف الراجحي</div>
+            <div class="bank-title">حساب مصرف الراجحي</div>
         </div>
         <div class="row">
-            <span class="label">الاسم:</span>
-            <span class="value">الاسم الكامل هنا</span>
+            <span class="label">الوصف:</span>
+            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-rajhi">SA0000000000000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="iban-rajhi">نسخ</button>
+            <button class="copy-btn" data-copy="iban-rajhi" type="button">نسخ</button>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الحساب:</span>
                 <span class="value" id="acc-rajhi">00000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="acc-rajhi">نسخ</button>
+            <button class="copy-btn" data-copy="acc-rajhi" type="button">نسخ</button>
         </div>
     </div>
 
     <!-- Alinma -->
-    <div class="card" id="modal-alinma">
-        <button class="close-modal">&times;</button>
+    <div class="card" id="modal-alinma" aria-hidden="true">
+        <button class="close-modal" type="button">&times;</button>
         <div class="bank-header">
-            <div class="bank-title">مصرف الإنماء</div>
+            <div class="bank-title">حساب بنك الإنماء</div>
         </div>
         <div class="row">
-            <span class="label">الاسم:</span>
-            <span class="value">الاسم الكامل هنا</span>
+            <span class="label">الوصف:</span>
+            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-alinma">SA0000000000000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="iban-alinma">نسخ</button>
+            <button class="copy-btn" data-copy="iban-alinma" type="button">نسخ</button>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الحساب:</span>
                 <span class="value" id="acc-alinma">00000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="acc-alinma">نسخ</button>
+            <button class="copy-btn" data-copy="acc-alinma" type="button">نسخ</button>
         </div>
     </div>
 
     <!-- Albilad -->
-    <div class="card" id="modal-albilad">
-        <button class="close-modal">&times;</button>
+    <div class="card" id="modal-albilad" aria-hidden="true">
+        <button class="close-modal" type="button">&times;</button>
         <div class="bank-header">
-            <div class="bank-title">بنك البلاد</div>
+            <div class="bank-title">حساب بنك البلاد</div>
         </div>
         <div class="row">
-            <span class="label">الاسم:</span>
-            <span class="value">الاسم الكامل هنا</span>
+            <span class="label">الوصف:</span>
+            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-albilad">SA0000000000000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="iban-albilad">نسخ</button>
+            <button class="copy-btn" data-copy="iban-albilad" type="button">نسخ</button>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الحساب:</span>
                 <span class="value" id="acc-albilad">00000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="acc-albilad">نسخ</button>
+            <button class="copy-btn" data-copy="acc-albilad" type="button">نسخ</button>
         </div>
     </div>
 
     <!-- Barq -->
-    <div class="card" id="modal-barq">
-        <button class="close-modal">&times;</button>
+    <div class="card" id="modal-barq" aria-hidden="true">
+        <button class="close-modal" type="button">&times;</button>
         <div class="bank-header">
-            <div class="bank-title">برق (Barq)</div>
+            <div class="bank-title">محفظة برق (Barq)</div>
         </div>
         <div class="row">
-            <span class="label">الاسم:</span>
-            <span class="value">الاسم الكامل هنا</span>
+            <span class="label">الوصف:</span>
+            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-barq">SA0000000000000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="iban-barq">نسخ</button>
+            <button class="copy-btn" data-copy="iban-barq" type="button">نسخ</button>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الحساب:</span>
                 <span class="value" id="acc-barq">00000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="acc-barq">نسخ</button>
+            <button class="copy-btn" data-copy="acc-barq" type="button">نسخ</button>
         </div>
     </div>
 
     <!-- STC Pay -->
-    <div class="card" id="modal-stc">
-        <button class="close-modal">&times;</button>
+    <div class="card" id="modal-stc" aria-hidden="true">
+        <button class="close-modal" type="button">&times;</button>
         <div class="bank-header">
             <div class="bank-title">STC Pay</div>
         </div>
         <div class="row">
-            <span class="label">الاسم:</span>
-            <span class="value">الاسم الكامل هنا</span>
+            <span class="label">الوصف:</span>
+            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-stc">SA0000000000000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="iban-stc">نسخ</button>
+            <button class="copy-btn" data-copy="iban-stc" type="button">نسخ</button>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الحساب:</span>
                 <span class="value" id="acc-stc">00000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="acc-stc">نسخ</button>
+            <button class="copy-btn" data-copy="acc-stc" type="button">نسخ</button>
         </div>
     </div>
 
     <!-- Mobily Pay -->
-    <div class="card" id="modal-mobily">
-        <button class="close-modal">&times;</button>
+    <div class="card" id="modal-mobily" aria-hidden="true">
+        <button class="close-modal" type="button">&times;</button>
         <div class="bank-header">
             <div class="bank-title">Mobily Pay</div>
         </div>
         <div class="row">
-            <span class="label">الاسم:</span>
-            <span class="value">الاسم الكامل هنا</span>
+            <span class="label">الوصف:</span>
+            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-mobily">SA0000000000000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="iban-mobily">نسخ</button>
+            <button class="copy-btn" data-copy="iban-mobily" type="button">نسخ</button>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الحساب:</span>
                 <span class="value" id="acc-mobily">00000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="acc-mobily">نسخ</button>
+            <button class="copy-btn" data-copy="acc-mobily" type="button">نسخ</button>
         </div>
     </div>
 
     <!-- D360 -->
-    <div class="card" id="modal-d360">
-        <button class="close-modal">&times;</button>
+    <div class="card" id="modal-d360" aria-hidden="true">
+        <button class="close-modal" type="button">&times;</button>
         <div class="bank-header">
             <div class="bank-title">D360 Bank</div>
         </div>
         <div class="row">
-            <span class="label">الاسم:</span>
-            <span class="value">الاسم الكامل هنا</span>
+            <span class="label">الوصف:</span>
+            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الآيبان:</span>
                 <span class="value" id="iban-d360">SA0000000000000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="iban-d360">نسخ</button>
+            <button class="copy-btn" data-copy="iban-d360" type="button">نسخ</button>
         </div>
         <div class="row copy-row">
             <div class="copy-text">
                 <span class="label">رقم الحساب:</span>
                 <span class="value" id="acc-d360">00000000000000</span>
             </div>
-            <button class="copy-btn" data-copy="acc-d360">نسخ</button>
+            <button class="copy-btn" data-copy="acc-d360" type="button">نسخ</button>
         </div>
     </div>
 
     <!-- Footer Note -->
     <div class="footer-note">
         <p class="note">
-            ملاحظة: عند التحويل يرجى التأكد من تطابق الاسم ورقم الحساب، ثم مشاركة إيصال التحويل.
+            ملاحظة: تأكد من مطابقة رقم الحساب والآيبان قبل التحويل. أبلغ فوراً إذا وجدت أي خطأ.
             <br />
-            في حال احتجت إلى إضافة بنك جديد أو تحديث الأرقام، راسلني على الواتساب أو البريد.
+            للاستخدام الآمن ننصح بكتابة وصف واضح للتحويل والتواصل عبر القنوات الرسمية للحصول على التأكيد.
         </p>
     </div>
 
     <!-- comments section -->
     <div class="comments-card">
         <div class="comments-header">
-            <h2 class="comments-title">التعليقات والتقييم</h2>
-            <div class="comments-subtitle">اكتب رأيك بعد تجربة الخدمة، فملاحظاتك تساعدني على التطوير.</div>
+            <h2 class="comments-title">آراؤكم تهمنا</h2>
+            <div class="comments-subtitle">شارك تقييمك وتعليقك السريع لنحسن التجربة.</div>
         </div>
 
         <form id="comment-form" class="comment-form">
             <div class="form-row">
                 <label for="comment-name">الاسم</label>
-                <input id="comment-name" type="text" placeholder="مثال: خالد بن محمد" />
+                <input id="comment-name" type="text" placeholder="مثال: محمد علي" />
             </div>
 
             <div class="form-row">
@@ -296,7 +357,7 @@
 
             <div class="form-row">
                 <label for="comment-text">التعليق</label>
-                <textarea id="comment-text" rows="3" placeholder="اكتب ملاحظاتك أو اقتراحك هنا..." required></textarea>
+                <textarea id="comment-text" rows="3" placeholder="اكتب رأيك باختصار حول تجربة التحويل..." required></textarea>
             </div>
 
             <button type="submit" class="submit-comment-btn">إرسال التعليق</button>
@@ -310,7 +371,7 @@
     </div>
 
     <script>
-        // Modal Logic
+        // Modal Logic (open/close with accessibility support)
         const backdrop = document.getElementById("backdrop");
         const bankBoxes = document.querySelectorAll(".bank-box");
         const closeButtons = document.querySelectorAll(".close-modal");
@@ -320,13 +381,25 @@
             const card = document.getElementById(cardId);
             if (card) {
                 backdrop.classList.add("active");
+                backdrop.setAttribute("aria-hidden", "false");
                 card.classList.add("active");
+                card.setAttribute("aria-hidden", "false");
+                const closeBtn = card.querySelector(".close-modal");
+                if (closeBtn) {
+                    closeBtn.focus();
+                }
             }
         }
 
         function closeModal() {
             backdrop.classList.remove("active");
-            cards.forEach(c => c.classList.remove("active"));
+            backdrop.setAttribute("aria-hidden", "true");
+            cards.forEach(c => {
+                c.classList.remove("active");
+                c.setAttribute("aria-hidden", "true");
+            });
+            const firstBox = document.querySelector(".bank-box");
+            if (firstBox) firstBox.focus();
         }
 
         bankBoxes.forEach(box => {
@@ -334,7 +407,53 @@
                 const target = box.getAttribute("data-target");
                 openModal(target);
             });
+            // keyboard support (Enter / Space)
+            box.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+                    e.preventDefault();
+                    const target = box.getAttribute("data-target");
+                    openModal(target);
+                }
+            });
         });
+
+        // Ensure each modal has an account row even if missing in markup
+        (function ensureAccountRows() {
+            cards.forEach(function (card) {
+                const key = card.id.replace(/^modal-/, '');
+                const accId = `acc-${key}`;
+                if (!document.getElementById(accId)) {
+                    const row = document.createElement('div');
+                    row.className = 'row copy-row';
+
+                    const copyText = document.createElement('div');
+                    copyText.className = 'copy-text';
+
+                    const label = document.createElement('span');
+                    label.className = 'label';
+                    label.textContent = 'رقم الحساب:';
+
+                    const value = document.createElement('span');
+                    value.className = 'value';
+                    value.id = accId;
+                    value.textContent = 'أضف رقم الحساب هنا';
+
+                    copyText.appendChild(label);
+                    copyText.appendChild(value);
+
+                    const btn = document.createElement('button');
+                    btn.className = 'copy-btn';
+                    btn.type = 'button';
+                    btn.setAttribute('data-copy', accId);
+                    btn.textContent = 'نسخ';
+
+                    row.appendChild(copyText);
+                    row.appendChild(btn);
+
+                    card.appendChild(row);
+                }
+            });
+        })();
 
         closeButtons.forEach(btn => btn.addEventListener("click", closeModal));
         backdrop.addEventListener("click", closeModal);
@@ -373,7 +492,7 @@
 
         function showCopiedState(btn) {
             const originalText = btn.textContent;
-            btn.textContent = "تم!";
+            btn.textContent = "تم النسخ!";
             btn.classList.add("copied");
             setTimeout(function () {
                 btn.textContent = originalText;
@@ -390,7 +509,7 @@
         }
 
         // comments (Google Forms backend)
-        const commentsApiUrl = "https://script.google.com/macros/s/AKfycbyoZBbDBuJR-cpd-q0JsmU4W0ukqdh5VyidNkRAVB-uJdLwHUeIUhAwJq7iPa363w9fWg/exec"; // حدّث الرابط بعد نشر Apps Script
+        const commentsApiUrl = "https://script.google.com/macros/s/AKfycbyoZBbDBuJR-cpd-q0JsmU4W0ukqdh5VyidNkRAVB-uJdLwHUeIUhAwJq7iPa363w9fWg/exec"; // جاهز للنشر عبر Apps Script
         const commentsListEl = document.getElementById("comments-list");
         const commentsStatusEl = document.getElementById("comments-status");
         let comments = [];
@@ -420,7 +539,7 @@
 
                 const nameEl = document.createElement("div");
                 nameEl.className = "comment-name";
-                nameEl.textContent = c.name || "مستخدم مجهول";
+                nameEl.textContent = c.name || "مستخدم بدون اسم";
 
                 const starsEl = document.createElement("div");
                 starsEl.className = "comment-stars";
@@ -446,27 +565,27 @@
 
         async function fetchComments() {
             if (!commentsApiUrl || commentsApiUrl.includes("REPLACE_WITH_YOUR_DEPLOYMENT_ID")) {
-                setCommentsStatus("⚠️ حدّث رابط Google Apps Script قبل تحميل التعليقات.", true);
+                setCommentsStatus("تنبيه: رابط Google Apps Script غير مهيأ، لن يتم حفظ التعليقات.", true);
                 renderComments();
                 return;
             }
             setCommentsStatus("جارٍ تحميل التعليقات...");
             try {
                 const response = await fetch(commentsApiUrl, { method: "GET", cache: "no-store" });
-                if (!response.ok) throw new Error(`خطأ في جلب التعليقات (${response.status})`);
+                if (!response.ok) throw new Error(`حدث خطأ أثناء تحميل التعليقات (${response.status})`);
                 const data = await response.json();
                 comments = Array.isArray(data.comments) ? data.comments : [];
                 renderComments();
-                setCommentsStatus(comments.length ? "" : "ابدأ بكتابة أول تعليق.");
+                setCommentsStatus(comments.length ? "" : "لا توجد تعليقات بعد.");
             } catch (error) {
                 console.error(error);
-                setCommentsStatus("تعذر تحميل التعليقات الآن، تحقق من نشر Google Apps Script.", true);
+                setCommentsStatus("حدث خطأ أثناء تحميل التعليقات، حاول لاحقاً.", true);
             }
         }
 
         async function sendCommentToGoogle(payload) {
             if (!commentsApiUrl || commentsApiUrl.includes("REPLACE_WITH_YOUR_DEPLOYMENT_ID")) {
-                throw new Error("يرجى استبدال رابط Google Apps Script في الكود.");
+                throw new Error("رابط Google Apps Script غير مهيأ.");
             }
             const response = await fetch(commentsApiUrl, {
                 method: "POST",
@@ -474,11 +593,11 @@
                 body: JSON.stringify(payload)
             });
             if (!response.ok) {
-                throw new Error(`تعذر الاتصال بالخادم (${response.status})`);
+                throw new Error(`حدث خطأ أثناء إرسال التعليق (${response.status})`);
             }
             const result = await response.json().catch(() => ({}));
             if (result.success === false) {
-                throw new Error(result.message || "تعذر حفظ التعليق.");
+                throw new Error(result.message || "تعذر إرسال التعليق.");
             }
             return result;
         }
@@ -509,10 +628,10 @@
         const submitBtn = document.querySelector(".submit-comment-btn");
         commentForm.addEventListener("submit", async function (e) {
             e.preventDefault();
-            const name = (commentNameInput.value || "").trim() || "مستخدم مجهول";
+            const name = (commentNameInput.value || "").trim() || "مستخدم بدون اسم";
             const text = (commentTextInput.value || "").trim();
             if (!text) {
-                setCommentsStatus("اكتب تعليقاً قبل الإرسال.", true);
+                setCommentsStatus("الرجاء كتابة تعليق قبل الإرسال.", true);
                 return;
             }
             const newComment = {
@@ -523,19 +642,19 @@
             if (submitBtn) {
                 submitBtn.disabled = true;
                 submitBtn.dataset.originalText = submitBtn.textContent;
-                submitBtn.textContent = "جارٍ الإرسال...";
+                submitBtn.textContent = "جاري إرسال تعليقك...";
             }
             try {
                 setCommentsStatus("");
                 await sendCommentToGoogle(newComment);
-                setCommentsStatus("تم إرسال تعليقك بنجاح ✅");
+                setCommentsStatus("تم إرسال تعليقك، شكراً!");
                 commentForm.reset();
                 currentRating = 5;
                 updateStarView();
                 await fetchComments();
             } catch (err) {
                 console.error(err);
-                setCommentsStatus(err.message || "تعذر إرسال التعليق، حاول مرة أخرى لاحقاً.", true);
+                setCommentsStatus(err.message || "حدث خطأ أثناء إرسال التعليق، حاول مرة أخرى.", true);
             } finally {
                 if (submitBtn) {
                     submitBtn.disabled = false;
