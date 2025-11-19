@@ -589,7 +589,7 @@
             }
             const response = await fetch(commentsApiUrl, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "text/plain;charset=utf-8" }, // text/plain لتفادي طلب preflight
                 body: JSON.stringify(payload)
             });
             if (!response.ok) {
