@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8" />
     <title>جميع حساباتي البنكية</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
     <!-- copy sound (coin / jump style) -->
@@ -18,69 +20,211 @@
 
     <!-- bubbles -->
     <div class="bubbles">
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
     </div>
 
-    <div class="card">
+    <!-- Header -->
+    <div class="header-section">
         <h1>جميع حساباتي البنكية</h1>
-        <p class="subtitle">اختر أي حساب وادخل عليه مباشرة من تطبيق بنكك أو تطبيق البنك.</p>
+        <div class="subtitle">اختر البنك لعرض التفاصيل</div>
+    </div>
 
-        <div class="bank">
-            <div class="bank-title">البنك الراجحي</div>
-
-            <div class="row">
-                <span class="label">اسم المستفيد:</span>
-                <span class="value">عمرو محمد أحمد</span>
-            </div>
-
-            <div class="row copy-row">
-                <div class="copy-text">
-                    <span class="label">رقم الحساب:</span>
-                    <span class="value" id="rajhi-account">1234567890</span>
-                </div>
-                <button class="copy-btn" data-copy="rajhi-account">نسخ</button>
-            </div>
-
-            <div class="row copy-row">
-                <div class="copy-text">
-                    <span class="label">رقم الآيبان (IBAN):</span>
-                    <span class="value" id="rajhi-iban">SA00 0000 0000 0000 0000 0000</span>
-                </div>
-                <button class="copy-btn" data-copy="rajhi-iban">نسخ</button>
-            </div>
+    <!-- Bank Grid -->
+    <div class="bank-grid" id="bank-grid">
+        <div class="bank-box" data-target="modal-rajhi">
+            <div class="box-icon">الراجحي</div>
+            <div class="box-name">الراجحي</div>
         </div>
-
-        <div class="bank">
-            <div class="bank-title">البنك الأهلي السعودي</div>
-
-            <div class="row">
-                <span class="label">اسم المستفيد:</span>
-                <span class="value">عمرو محمد أحمد</span>
-            </div>
-
-            <div class="row copy-row">
-                <div class="copy-text">
-                    <span class="label">رقم الحساب:</span>
-                    <span class="value" id="ahli-account">9876543210</span>
-                </div>
-                <button class="copy-btn" data-copy="ahli-account">نسخ</button>
-            </div>
-
-            <div class="row copy-row">
-                <div class="copy-text">
-                    <span class="label">رقم الآيبان (IBAN):</span>
-                    <span class="value" id="ahli-iban">SA11 1111 1111 1111 1111 1111</span>
-                </div>
-                <button class="copy-btn" data-copy="ahli-iban">نسخ</button>
-            </div>
+        <div class="bank-box" data-target="modal-alinma">
+            <div class="box-icon">الإنماء</div>
+            <div class="box-name">الإنماء</div>
         </div>
+        <div class="bank-box" data-target="modal-albilad">
+            <div class="box-icon">البلاد</div>
+            <div class="box-name">البلاد</div>
+        </div>
+        <div class="bank-box" data-target="modal-barq">
+            <div class="box-icon">برق</div>
+            <div class="box-name">برق</div>
+        </div>
+        <div class="bank-box" data-target="modal-stc">
+            <div class="box-icon">STC</div>
+            <div class="box-name">STC Pay</div>
+        </div>
+        <div class="bank-box" data-target="modal-mobily">
+            <div class="box-icon">موبايلي</div>
+            <div class="box-name">موبايلي</div>
+        </div>
+        <div class="bank-box" data-target="modal-d360">
+            <div class="box-icon">D360</div>
+            <div class="box-name">D360</div>
+        </div>
+    </div>
 
+    <!-- Backdrop -->
+    <div class="backdrop" id="backdrop"></div>
+
+    <!-- Modals -->
+    <!-- Rajhi -->
+    <div class="card" id="modal-rajhi">
+        <button class="close-modal">&times;</button>
+        <div class="bank-header">
+            <div class="bank-title">مصرف الراجحي</div>
+        </div>
+        <div class="row">
+            <span class="label">الاسم:</span>
+            <span class="value">الاسم الكامل هنا</span>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">الآيبان:</span>
+                <span class="value" id="iban-rajhi">SA0000000000000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="iban-rajhi">نسخ</button>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">رقم الحساب:</span>
+                <span class="value" id="acc-rajhi">00000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="acc-rajhi">نسخ</button>
+        </div>
+    </div>
+
+    <!-- Alinma -->
+    <div class="card" id="modal-alinma">
+        <button class="close-modal">&times;</button>
+        <div class="bank-header">
+            <div class="bank-title">مصرف الإنماء</div>
+        </div>
+        <div class="row">
+            <span class="label">الاسم:</span>
+            <span class="value">الاسم الكامل هنا</span>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">الآيبان:</span>
+                <span class="value" id="iban-alinma">SA0000000000000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="iban-alinma">نسخ</button>
+        </div>
+    </div>
+
+    <!-- Albilad -->
+    <div class="card" id="modal-albilad">
+        <button class="close-modal">&times;</button>
+        <div class="bank-header">
+            <div class="bank-title">بنك البلاد</div>
+        </div>
+        <div class="row">
+            <span class="label">الاسم:</span>
+            <span class="value">الاسم الكامل هنا</span>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">الآيبان:</span>
+                <span class="value" id="iban-albilad">SA0000000000000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="iban-albilad">نسخ</button>
+        </div>
+    </div>
+
+    <!-- Barq -->
+    <div class="card" id="modal-barq">
+        <button class="close-modal">&times;</button>
+        <div class="bank-header">
+            <div class="bank-title">برق (Barq)</div>
+        </div>
+        <div class="row">
+            <span class="label">الاسم:</span>
+            <span class="value">الاسم الكامل هنا</span>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">الآيبان:</span>
+                <span class="value" id="iban-barq">SA0000000000000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="iban-barq">نسخ</button>
+        </div>
+    </div>
+
+    <!-- STC Pay -->
+    <div class="card" id="modal-stc">
+        <button class="close-modal">&times;</button>
+        <div class="bank-header">
+            <div class="bank-title">STC Pay</div>
+        </div>
+        <div class="row">
+            <span class="label">الاسم:</span>
+            <span class="value">الاسم الكامل هنا</span>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">الآيبان:</span>
+                <span class="value" id="iban-stc">SA0000000000000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="iban-stc">نسخ</button>
+        </div>
+    </div>
+
+    <!-- Mobily Pay -->
+    <div class="card" id="modal-mobily">
+        <button class="close-modal">&times;</button>
+        <div class="bank-header">
+            <div class="bank-title">Mobily Pay</div>
+        </div>
+        <div class="row">
+            <span class="label">الاسم:</span>
+            <span class="value">الاسم الكامل هنا</span>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">الآيبان:</span>
+                <span class="value" id="iban-mobily">SA0000000000000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="iban-mobily">نسخ</button>
+        </div>
+    </div>
+
+    <!-- D360 -->
+    <div class="card" id="modal-d360">
+        <button class="close-modal">&times;</button>
+        <div class="bank-header">
+            <div class="bank-title">D360 Bank</div>
+        </div>
+        <div class="row">
+            <span class="label">الاسم:</span>
+            <span class="value">الاسم الكامل هنا</span>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text">
+                <span class="label">الآيبان:</span>
+                <span class="value" id="iban-d360">SA0000000000000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="iban-d360">نسخ</button>
+        </div>
+    </div>
+
+    <!-- Footer Note -->
+    <div class="footer-note">
         <p class="note">
-            الرجاء التأكد من تطابق اسم المستفيد ورقم الآيبان قبل تنفيذ التحويل. لأي استفسار يرجى التواصل معي على الواتساب.
+            ملاحظة: عند التحويل، يرجى التأكد من تطابق الاسم ورقم الحساب.
+            <br>
+            الرجاء إرسال صورة الإيصال عبر الواتساب.
         </p>
     </div>
 
@@ -112,14 +256,42 @@
                 <label for="comment-text">التعليق</label>
                 <textarea id="comment-text" rows="3" placeholder="اكتب تعليقك هنا..."></textarea>
             </div>
-
-            <button type="submit" class="submit-comment-btn">إرسال التقييم</button>
         </form>
-
-        <div id="comments-list" class="comments-list"></div>
     </div>
 
     <script>
+        // Modal Logic
+        const backdrop = document.getElementById("backdrop");
+        const bankBoxes = document.querySelectorAll(".bank-box");
+        const closeButtons = document.querySelectorAll(".close-modal");
+        const cards = document.querySelectorAll(".card");
+
+        function openModal(cardId) {
+            const card = document.getElementById(cardId);
+            if (card) {
+                backdrop.classList.add("active");
+                card.classList.add("active");
+            }
+        }
+
+        function closeModal() {
+            backdrop.classList.remove("active");
+            cards.forEach(c => c.classList.remove("active"));
+        }
+
+        bankBoxes.forEach(box => {
+            box.addEventListener("click", () => {
+                const target = box.getAttribute("data-target");
+                openModal(target);
+            });
+        });
+
+        closeButtons.forEach(btn => btn.addEventListener("click", closeModal));
+        backdrop.addEventListener("click", closeModal);
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeModal();
+        });
+
         // copy buttons + sound
         const copySound = document.getElementById("copy-sound");
 
@@ -129,8 +301,14 @@
                 const el = document.getElementById(targetId);
                 if (!el) return;
                 const text = el.textContent.trim();
-
-                if (!navigator.clipboard) {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text).then(function () {
+                        showCopiedState(btn);
+                        playCopySound();
+                    }).catch(function () {
+                        playCopySound();
+                    });
+                } else {
                     const tempInput = document.createElement("input");
                     tempInput.value = text;
                     document.body.appendChild(tempInput);
@@ -139,15 +317,7 @@
                     document.body.removeChild(tempInput);
                     showCopiedState(btn);
                     playCopySound();
-                    return;
                 }
-
-                navigator.clipboard.writeText(text).then(function () {
-                    showCopiedState(btn);
-                    playCopySound();
-                }).catch(function () {
-                    playCopySound();
-                });
             });
         });
 
@@ -165,8 +335,8 @@
             if (!copySound) return;
             try {
                 copySound.currentTime = 0;
-                copySound.play().catch(function () {});
-            } catch (e) {}
+                copySound.play().catch(function () { });
+            } catch (e) { }
         }
 
         // comments (localStorage based)
@@ -189,10 +359,24 @@
 
         function renderComments() {
             const container = document.getElementById("comments-list");
-            container.innerHTML = "";
+            // Create container if it doesn't exist inside comments-card
+            if (!container) {
+                const listDiv = document.createElement("div");
+                listDiv.id = "comments-list";
+                listDiv.className = "comments-list";
+                document.querySelector(".comments-card").appendChild(listDiv);
+                // Call render again
+                // But wait, I need to append it first.
+                // Let's just use the reference.
+                // Actually, I should add the container in the HTML above.
+            }
+            const list = document.getElementById("comments-list");
+            if (!list) return; // Should be there now
+
+            list.innerHTML = "";
 
             if (!comments || comments.length === 0) {
-                container.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد.</p>';
+                list.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد.</p>';
                 return;
             }
 
@@ -215,31 +399,25 @@
                     starsText += i <= rating ? "★" : "☆";
                 }
                 starsEl.textContent = starsText;
-
                 header.appendChild(nameEl);
                 header.appendChild(starsEl);
-
                 const body = document.createElement("div");
                 body.className = "comment-text";
                 body.textContent = c.text || "";
-
                 item.appendChild(header);
                 item.appendChild(body);
-
-                container.appendChild(item);
+                list.appendChild(item);
             });
         }
 
         let currentRating = 5;
         const starElems = document.querySelectorAll(".star");
-
         function updateStarView() {
             starElems.forEach(function (star) {
                 const value = Number(star.getAttribute("data-value"));
                 star.classList.toggle("selected", value <= currentRating);
             });
         }
-
         starElems.forEach(function (star) {
             star.addEventListener("click", function () {
                 const value = Number(star.getAttribute("data-value"));
@@ -247,39 +425,41 @@
                 updateStarView();
             });
         });
-
         updateStarView();
+
+        // Ensure comments list container exists
+        if (!document.getElementById("comments-list")) {
+            const listDiv = document.createElement("div");
+            listDiv.id = "comments-list";
+            listDiv.className = "comments-list";
+            document.querySelector(".comments-card").appendChild(listDiv);
+        }
         renderComments();
 
         const commentForm = document.getElementById("comment-form");
         const commentNameInput = document.getElementById("comment-name");
         const commentTextInput = document.getElementById("comment-text");
-
         commentForm.addEventListener("submit", function (e) {
             e.preventDefault();
-
             const name = (commentNameInput.value || "").trim() || "زائر";
             const text = (commentTextInput.value || "").trim();
-
             if (!text) {
                 return;
             }
-
             const newComment = {
                 id: Date.now(),
                 name: name,
                 text: text,
                 rating: currentRating || 0
             };
-
             comments.unshift(newComment);
             saveComments();
             renderComments();
-
             commentForm.reset();
             currentRating = 5;
             updateStarView();
         });
     </script>
 </body>
+
 </html>
