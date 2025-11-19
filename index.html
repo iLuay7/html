@@ -658,12 +658,18 @@
             }
             try {
                 setCommentsStatus("");
-                await sendCommentToGoogle(newComment);
+                const result = await sendCommentToGoogle(newComment);
                 setCommentsStatus("تم إرسال تعليقك، شكراً!");
                 commentForm.reset();
                 currentRating = 5;
                 updateStarView();
-                await fetchComments();
+                if (result && result.offlineFallback) {
+                    // fallback: أضف التعليق محلياً لأن الرد غير مقروء مع no-cors
+                    comments = [...comments, newComment];
+                    renderComments();
+                } else {
+                    await fetchComments();
+                }
             } catch (err) {
                 console.error(err);
                 setCommentsStatus(err.message || "حدث خطأ أثناء إرسال التعليق، حاول مرة أخرى.", true);
