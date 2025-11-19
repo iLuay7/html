@@ -587,19 +587,31 @@
             if (!commentsApiUrl || commentsApiUrl.includes("REPLACE_WITH_YOUR_DEPLOYMENT_ID")) {
                 throw new Error("رابط Google Apps Script غير مهيأ.");
             }
-            const response = await fetch(commentsApiUrl, {
-                method: "POST",
-                headers: { "Content-Type": "text/plain;charset=utf-8" }, // text/plain لتفادي طلب preflight
-                body: JSON.stringify(payload)
-            });
-            if (!response.ok) {
-                throw new Error(`حدث خطأ أثناء إرسال التعليق (${response.status})`);
+            try {
+                const response = await fetch(commentsApiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" }, // text/plain لتفادي طلب preflight
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    throw new Error(`حدث خطأ أثناء إرسال التعليق (${response.status})`);
+                }
+                const result = await response.json().catch(() => ({}));
+                if (result.success === false) {
+                    throw new Error(result.message || "تعذر إرسال التعليق.");
+                }
+                return result;
+            } catch (primaryErr) {
+                console.warn("Primary POST failed, trying no-cors fallback", primaryErr);
+                // fallback: no-cors يسمح بالوصول بدون preflight لكن بدون قراءة الرد
+                await fetch(commentsApiUrl, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(payload)
+                });
+                return { success: true, offlineFallback: true };
             }
-            const result = await response.json().catch(() => ({}));
-            if (result.success === false) {
-                throw new Error(result.message || "تعذر إرسال التعليق.");
-            }
-            return result;
         }
 
         let currentRating = 5;
