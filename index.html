@@ -513,6 +513,24 @@
         const commentsListEl = document.getElementById("comments-list");
         const commentsStatusEl = document.getElementById("comments-status");
         let comments = [];
+        const LOCAL_COMMENTS_KEY = "comments_cache";
+
+        function loadLocalComments() {
+            try {
+                const raw = localStorage.getItem(LOCAL_COMMENTS_KEY);
+                if (!raw) return [];
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function persistLocalComments(list) {
+            try {
+                localStorage.setItem(LOCAL_COMMENTS_KEY, JSON.stringify(list || []));
+            } catch (e) { }
+        }
 
         function setCommentsStatus(message, isError = false) {
             if (!commentsStatusEl) return;
@@ -576,6 +594,7 @@
                 const data = await response.json();
                 comments = Array.isArray(data.comments) ? data.comments : [];
                 renderComments();
+                persistLocalComments(comments);
                 setCommentsStatus(comments.length ? "" : "لا توجد تعليقات بعد.");
             } catch (error) {
                 console.error(error);
@@ -631,6 +650,8 @@
         });
         updateStarView();
 
+        // load cached comments locally first
+        comments = loadLocalComments();
         renderComments();
         fetchComments();
 
@@ -663,12 +684,19 @@
                 commentForm.reset();
                 currentRating = 5;
                 updateStarView();
+                const stamped = { ...newComment, timestamp: new Date().toISOString() };
                 if (result && result.offlineFallback) {
                     // fallback: أضف التعليق محلياً لأن الرد غير مقروء مع no-cors
-                    comments = [...comments, newComment];
+                    comments = [...comments, stamped];
                     renderComments();
+                    persistLocalComments(comments);
                 } else {
                     await fetchComments();
+                    if (!comments.find(c => c.text === stamped.text && c.name === stamped.name)) {
+                        comments = [...comments, stamped];
+                        renderComments();
+                        persistLocalComments(comments);
+                    }
                 }
             } catch (err) {
                 console.error(err);
