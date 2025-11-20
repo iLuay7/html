@@ -590,9 +590,6 @@
             setCommentsStatus("جارٍ تحميل التعليقات...");
             try {
                 const response = await fetch(commentsApiUrl, { method: "GET", cache: "no-store" });
-                if (response.redirected || response.status === 401 || response.status === 403) {
-                    throw new Error("يجب تسجيل الدخول بحساب Google لعرض التعليقات.");
-                }
                 if (!response.ok) throw new Error(`حدث خطأ أثناء تحميل التعليقات (${response.status})`);
                 const data = await response.json();
                 comments = Array.isArray(data.comments) ? data.comments : [];
@@ -615,9 +612,6 @@
                     headers: { "Content-Type": "text/plain;charset=utf-8" }, // text/plain لتفادي طلب preflight
                     body: JSON.stringify(payload)
                 });
-                if (response.redirected || response.status === 401 || response.status === 403) {
-                    throw new Error("يجب تسجيل الدخول بحساب Google لإرسال التعليق.");
-                }
                 if (!response.ok) {
                     throw new Error(`حدث خطأ أثناء إرسال التعليق (${response.status})`);
                 }
