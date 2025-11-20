@@ -2,6 +2,11 @@ html {
     overflow-x: hidden;
 }
 
+/* Hide the runner animation */
+.bg-chase {
+    display: none !important;
+}
+
 /* Animated background (runner chasing blurred target) */
 .bg-chase { position: fixed; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; will-change: transform; }
 .bg-chase .runner, .bg-chase .target { position: absolute; top: 40%; font-size: 72px; }
@@ -354,11 +359,26 @@ h1 {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
+    display: flex;               /* center the modal precisely */
+    align-items: center;
+    justify-content: center;
+    padding: env(safe-area-inset-top) 12px env(safe-area-inset-bottom) 12px; /* safe areas */
 }
 
 .backdrop.active {
     opacity: 1;
     pointer-events: auto;
+}
+
+/* Center card via flex when backdrop is active */
+.backdrop.active .card {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: min(480px, calc(100% - 24px));
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
+    overflow: auto;
 }
 
 /* modal card */
@@ -368,6 +388,7 @@ h1 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.9);
+    will-change: transform;
     z-index: 50;
     max-width: 90%;
     width: 400px;
@@ -740,4 +761,36 @@ h1 {
         flex-direction: row;
         justify-content: space-between;
     }
+}
+
+/* Mobile boost: enlarge modal UI by ~70% on small phones */
+@media (max-width: 480px) {
+    .card {
+        padding: 32px 24px;
+    }
+    .bank-title {
+        font-size: 32px; /* 20px -> ~+60% */
+    }
+    .label {
+        font-size: 20px; /* 13px -> ~+54% */
+    }
+    .value {
+        font-size: 24px; /* 15px -> ~+60% */
+    }
+    /* Boost select and buttons */
+    .bank-select {
+        font-size: 20px !important;
+        padding: 16px 16px !important;
+        min-height: 56px;
+    }
+    .copy-btn {
+        font-size: 20px;
+        padding: 12px 22px;
+    }
+    .close-modal {
+        width: 48px;
+        height: 48px;
+        font-size: 26px;
+    }
+    .row { gap: 12px; }
 }
