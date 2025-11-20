@@ -14,6 +14,7 @@
             min-height: 100%;
             background: linear-gradient(135deg, #0a1a3a, #021122);
             color: #ffffff;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
         /* force vertical stacked rectangular bank boxes */
@@ -111,10 +112,28 @@
             align-items: center;
             backdrop-filter: blur(5px);
         }
+
+        /* Rain effect */
+        .raindrop {
+            position: fixed;
+            bottom: 100%;
+            width: 1px;
+            height: 60px;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.3));
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div id="rain-container"></div>
     <div id="lang-switcher">
         <button id="lang-btn">EN</button>
     </div>
@@ -679,6 +698,30 @@
             fetchComments();
             checkAndDisableCommenting();
         });
+    </script>
+    <script>
+        // Rain Effect Script
+        function createRain() {
+            const rainContainer = document.getElementById('rain-container');
+            if (!rainContainer) return;
+            const numberOfDrops = 150;
+            for (let i = 0; i < numberOfDrops; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'raindrop';
+                const left = Math.random() * 100;
+                const duration = (Math.random() * 0.5) + 0.5;
+                const delay = Math.random() * 5;
+                drop.style.left = `${left}vw`;
+                drop.style.animationDuration = `${duration}s`;
+                drop.style.animationDelay = `${delay}s`;
+                rainContainer.appendChild(drop);
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', createRain);
+        } else {
+            createRain();
+        }
     </script>
 </body>
 
