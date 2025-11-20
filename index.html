@@ -4,8 +4,18 @@
 <head>
     <meta charset="UTF-8" />
     <title id="page-title">بيانات التحويل والدفع</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QDLCN4Q2H7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QDLCN4Q2H7');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <style>
         /* fallback to keep background dark even لو تعطل تحميل style.css */
         html,
@@ -49,14 +59,14 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 56px;
-            height: 56px;
+            width: 48px;
+            height: 48px;
             border-radius: 12px;
             background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
             border: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 4px 10px rgba(0,0,0,0.25);
             line-height: 1;
-            font-size: 26px;
+            font-size: 18px;
             font-weight: 700;
             padding: 0;
             font-family: "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji","Segoe UI Symbol",system-ui,sans-serif;
@@ -65,7 +75,7 @@
         }
 
         .bank-box .box-name {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #cdd6f0;
             text-align: center;
         }
@@ -78,6 +88,16 @@
 
             .bank-box {
                 padding: 14px;
+            }
+
+            .bank-box .box-icon {
+                width: 42px;
+                height: 42px;
+                font-size: 16px;
+            }
+
+            .bank-box .box-name {
+                font-size: 0.85rem;
             }
         }
 
@@ -146,24 +166,12 @@
         /* Dropdown style for unified picker */
         .bank-select { width: 100%; padding: 10px 12px; background: rgba(7,17,46,.85); color: #e5edff; border: 1px solid rgba(255,255,255,.12); border-radius: 10px; }
 
-        /* bg-chase styles moved to style.css */
+
     </style>
 </head>
 
 <body>
-    <div class="bg-chase" aria-hidden="true">
-        <span class="runner" aria-hidden="true">
-            <span class="man">
-                <span class="head"></span>
-                <span class="torso"></span>
-                <span class="arm left"></span>
-                <span class="arm right"></span>
-                <span class="leg left"></span>
-                <span class="leg right"></span>
-            </span>
-        </span>
-        <span class="target">⬤</span>
-    </div>
+
     <div id="rain-container"></div>
     <div id="lang-switcher">
         <button id="lang-btn">EN</button>
@@ -190,7 +198,7 @@
         musicToggleBtn.addEventListener('click', () => {
             if (music.paused) {
                 music.muted = false;
-                music.play().catch(e => console.error("Play failed", e));
+                music.play().catch(e => console.warn("Play failed", e));
             } else {
                 music.muted = !music.muted;
             }
@@ -220,6 +228,23 @@
             });
         }
 
+        // Mobile/Galaxy fix: start playback on first user gesture when autoplay is blocked
+        const unlockAudio = () => {
+            try {
+                music.muted = false;
+                music.volume = Math.max(music.volume, fadeTo);
+                const p = music.play();
+                if (p && p.then) {
+                    p.then(() => {
+                        document.removeEventListener('touchstart', unlockAudio);
+                        document.removeEventListener('click', unlockAudio);
+                    }).catch(() => {});
+                }
+            } catch (e) {}
+        };
+        document.addEventListener('touchstart', unlockAudio, { passive: true });
+        document.addEventListener('click', unlockAudio);
+
         updateIcon();
       }
     </script>
@@ -243,6 +268,7 @@
         <div class="subtitle" data-key="header-subtitle">اختر مزود الخدمة وانسخ بيانات الحساب لإتمام تحويلك بسرعة.</div>
     </div>
 
+    <!-- Bank Grid (Single Entry) -->
     <!-- Bank Grid (Single Entry) -->
     <div class="bank-grid" id="bank-grid">
         <div class="bank-box" data-target="modal-bank" role="button" tabindex="0">
@@ -507,15 +533,42 @@
         const copySound = document.getElementById("copy-sound");
         if (copySound) copySound.volume = 0.5;
 
-        function copyById(id, feedbackEl) {
+        async function copyById(id, feedbackEl) {
             const text = document.getElementById(id)?.textContent.trim();
             if (!text) return;
-            navigator.clipboard.writeText(text).then(() => {
-                if (feedbackEl) {
-                    showCopiedState(feedbackEl);
-                }
+
+            const giveFeedback = () => {
+                if (feedbackEl) showCopiedState(feedbackEl);
                 playCopySound();
-            }).catch(playCopySound);
+            };
+
+            // Modern clipboard API
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    giveFeedback();
+                    return;
+                } catch (err) {
+                    // fall back below
+                }
+            }
+
+            // Fallback for mobile/Galaxy: hidden textarea copy
+            const temp = document.createElement('textarea');
+            temp.value = text;
+            temp.setAttribute('readonly', '');
+            temp.style.position = 'fixed';
+            temp.style.opacity = '0';
+            document.body.appendChild(temp);
+            temp.focus();
+            temp.select();
+            temp.setSelectionRange(0, text.length);
+            try {
+                const ok = document.execCommand('copy');
+                if (ok) giveFeedback();
+            } finally {
+                temp.remove();
+            }
         }
 
         document.querySelectorAll(".copy-btn").forEach(btn => {
@@ -673,7 +726,7 @@
                 persistLocalComments(comments);
                 setCommentsStatus(comments.length ? "" : "no-comments");
             } catch (error) {
-                console.error(error);
+                console.warn("Comments load error:", error);
                 setCommentsStatus(error.message || "comments-load-error", true);
             }
         }
@@ -731,7 +784,7 @@
                 renderComments();
                 setTimeout(fetchComments, 2000);
             } catch (err) {
-                console.error(err);
+                console.warn(err);
                 setCommentsStatus(err.message || "comment-error", true);
                 submitBtn.disabled = false;
                 submitBtn.textContent = translations[currentLang]['comment-submit-btn'];

@@ -2,65 +2,7 @@ html {
     overflow-x: hidden;
 }
 
-/* Hide the runner animation */
-.bg-chase {
-    display: none !important;
-}
 
-/* Animated background (runner chasing blurred target) */
-.bg-chase { position: fixed; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; will-change: transform; }
-.bg-chase .runner, .bg-chase .target { position: absolute; top: 40%; font-size: 72px; }
-.bg-chase .runner { left: -10%; opacity: .5; animation: route-move 16s linear infinite; filter: drop-shadow(0 4px 10px rgba(0,0,0,.4)); display: inline-block; will-change: transform; }
-.bg-chase .runner .man { position: relative; display: inline-block; width: 60px; height: 80px; transform-origin: bottom center; will-change: transform, filter; }
-.bg-chase .runner .head { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; background: #e5edff; border-radius: 50%; box-shadow: inset 0 -2px 0 rgba(0,0,0,.2); }
-.bg-chase .runner .torso { position: absolute; top: 18px; left: 50%; transform: translateX(-50%) skewX(-6deg); width: 10px; height: 30px; background: #8fb7ff; border-radius: 6px; }
-.bg-chase .runner .arm { position: absolute; top: 20px; width: 8px; height: 26px; background: #aac8ff; border-radius: 6px; transform-origin: top center; animation: arm-swing .6s ease-in-out infinite alternate; }
-.bg-chase .runner .arm.left { left: calc(50% - 14px); }
-.bg-chase .runner .arm.right { left: calc(50% + 6px); animation-delay: .3s; }
-.bg-chase .runner .leg { position: absolute; top: 44px; width: 10px; height: 34px; background: #5aa2ff; border-radius: 6px; transform-origin: top center; animation: leg-run .6s ease-in-out infinite alternate; }
-.bg-chase .runner .leg.left { left: calc(50% - 12px); }
-.bg-chase .runner .leg.right { left: calc(50% + 2px); animation-delay: .3s; }
-
-@keyframes arm-swing { 0% { transform: rotate(25deg); } 100% { transform: rotate(-35deg); } }
-@keyframes leg-run { 0% { transform: rotate(-20deg); } 100% { transform: rotate(30deg); } }
-@keyframes depth-zoom {
-  0%   { transform: scaleX(-1) scale(0.9); filter: blur(1px) brightness(0.95); }
-  50%  { transform: scaleX(-1) scale(1.12); filter: blur(0px) brightness(1); }
-  100% { transform: scaleX(-1) scale(0.9); filter: blur(1px) brightness(0.95); }
-}
-@keyframes depth-zoom-target {
-  0%   { transform: scale(0.85); filter: blur(2px) brightness(.85); }
-  50%  { transform: scale(1.05); filter: blur(1px) brightness(1); }
-  100% { transform: scale(0.85); filter: blur(2px) brightness(.85); }
-}
-.bg-chase .target { left: 0; opacity: .45; animation: route-move-target 16s linear infinite, depth-zoom-target 3.6s ease-in-out infinite; filter: blur(2px) brightness(.9); will-change: transform, filter; }
-@keyframes route-move {
-  /* Move right across screen */
-  0%   { transform: translateX(-10vw) rotate(0deg)    scale(0.9); }
-  20%  { transform: translateX(120vw) rotate(0deg)    scale(1.08); }
-  /* Jump to right edge and go left */
-  25%  { transform: translateX(120vw) rotate(180deg)  scale(0.92); }
-  45%  { transform: translateX(-20vw) rotate(180deg)  scale(1.08); }
-  /* Jump to top and go down */
-  50%  { transform: translateY(-20vh) rotate(90deg)   scale(0.92); }
-  70%  { transform: translateY(120vh) rotate(90deg)   scale(1.08); }
-  /* Jump to bottom and go up */
-  75%  { transform: translateY(120vh) rotate(-90deg)  scale(0.92); }
-  95%  { transform: translateY(-20vh) rotate(-90deg)  scale(1.08); }
-  100% { transform: translateX(-10vw) rotate(0deg)    scale(0.9); }
-}
-@keyframes route-move-target {
-  0%   { transform: translateX(120vw) rotate(0deg)     scale(0.9); }
-  20%  { transform: translateX(-10vw) rotate(0deg)     scale(1.06); }
-  25%  { transform: translateX(-20vw) rotate(180deg)   scale(0.92); }
-  45%  { transform: translateX(120vw) rotate(180deg)   scale(1.06); }
-  50%  { transform: translateY(120vh) rotate(-90deg)   scale(0.92); }
-  70%  { transform: translateY(-20vh) rotate(-90deg)   scale(1.06); }
-  75%  { transform: translateY(-20vh) rotate(90deg)    scale(0.92); }
-  95%  { transform: translateY(120vh) rotate(90deg)    scale(1.06); }
-  100% { transform: translateX(120vw) rotate(0deg)     scale(0.9); }
-}
-@keyframes target-move { 0% { transform: translateX(20vw); } 100% { transform: translateX(140vw); } }
 /* Removed reduced-motion override to ensure background animation is visible */
 
 body {
@@ -763,34 +705,37 @@ h1 {
     }
 }
 
-/* Mobile boost: enlarge modal UI by ~70% on small phones */
+/* Mobile boost: Adjusted to be compact and legible */
 @media (max-width: 480px) {
     .card {
-        padding: 32px 24px;
+        padding: 20px 16px;
+        width: min(360px, calc(100% - 24px));
     }
     .bank-title {
-        font-size: 32px; /* 20px -> ~+60% */
+        font-size: 20px;
     }
     .label {
-        font-size: 20px; /* 13px -> ~+54% */
+        font-size: 13px;
     }
     .value {
-        font-size: 24px; /* 15px -> ~+60% */
+        font-size: 15px;
     }
-    /* Boost select and buttons */
+    /* Compact select and buttons */
     .bank-select {
-        font-size: 20px !important;
-        padding: 16px 16px !important;
-        min-height: 56px;
+        font-size: 14px !important;
+        padding: 10px 12px !important;
+        min-height: 40px;
     }
     .copy-btn {
-        font-size: 20px;
-        padding: 12px 22px;
+        font-size: 13px;
+        padding: 6px 14px;
     }
     .close-modal {
-        width: 48px;
-        height: 48px;
-        font-size: 26px;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        top: 12px;
+        left: 12px;
     }
-    .row { gap: 12px; }
+    .row { gap: 8px; }
 }
