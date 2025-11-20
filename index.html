@@ -46,9 +46,22 @@
         }
 
         .bank-box .box-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            line-height: 1;
+            font-size: 26px;
             font-weight: 700;
-            font-size: 1.05rem;
-            padding-inline-end: 12px;
+            padding: 0;
+            font-family: "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji","Segoe UI Symbol",system-ui,sans-serif;
+            -webkit-font-smoothing: antialiased;
+            transform: translateY(1px);
         }
 
         .bank-box .box-name {
@@ -129,10 +142,28 @@
                 transform: translateY(110vh);
             }
         }
+
+        /* Dropdown style for unified picker */
+        .bank-select { width: 100%; padding: 10px 12px; background: rgba(7,17,46,.85); color: #e5edff; border: 1px solid rgba(255,255,255,.12); border-radius: 10px; }
+
+        /* bg-chase styles moved to style.css */
     </style>
 </head>
 
 <body>
+    <div class="bg-chase" aria-hidden="true">
+        <span class="runner" aria-hidden="true">
+            <span class="man">
+                <span class="head"></span>
+                <span class="torso"></span>
+                <span class="arm left"></span>
+                <span class="arm right"></span>
+                <span class="leg left"></span>
+                <span class="leg right"></span>
+            </span>
+        </span>
+        <span class="target">⬤</span>
+    </div>
     <div id="rain-container"></div>
     <div id="lang-switcher">
         <button id="lang-btn">EN</button>
@@ -200,90 +231,49 @@
         <div class="subtitle" data-key="header-subtitle">اختر مزود الخدمة وانسخ بيانات الحساب لإتمام تحويلك بسرعة.</div>
     </div>
 
-    <!-- Bank Grid -->
+    <!-- Bank Grid (Single Entry) -->
     <div class="bank-grid" id="bank-grid">
-        <div class="bank-box" data-target="modal-rajhi" role="button" tabindex="0">
-            <div class="box-icon" data-key="rajhi-name">الراجحي</div>
-            <div class="box-name" data-key="rajhi-desc">حساب مصرف الراجحي</div>
-        </div>
-        <div class="bank-box" data-target="modal-alinma" role="button" tabindex="0">
-            <div class="box-icon" data-key="alinma-name">الإنماء</div>
-            <div class="box-name" data-key="alinma-desc">حساب بنك الإنماء</div>
-        </div>
-        <div class="bank-box" data-target="modal-albilad" role="button" tabindex="0">
-            <div class="box-icon" data-key="albilad-name">البلاد</div>
-            <div class="box-name" data-key="albilad-desc">حساب بنك البلاد</div>
-        </div>
-        <div class="bank-box" data-target="modal-barq" role="button" tabindex="0">
-            <div class="box-icon" data-key="barq-name">برق</div>
-            <div class="box-name" data-key="barq-desc">محفظة برق (Barq)</div>
-        </div>
-        <div class="bank-box" data-target="modal-stc" role="button" tabindex="0">
-            <div class="box-icon">STC</div>
-            <div class="box-name" data-key="stc-desc">STC Pay</div>
-        </div>
-        <div class="bank-box" data-target="modal-mobily" role="button" tabindex="0">
-            <div class="box-icon" data-key="mobily-name">موبايلي</div>
-            <div class="box-name" data-key="mobily-desc">Mobily Pay</div>
-        </div>
-        <div class="bank-box" data-target="modal-d360" role="button" tabindex="0">
-            <div class="box-icon">D360</div>
-            <div class="box-name" data-key="d360-desc">D360 Bank</div>
+        <div class="bank-box" data-target="modal-bank" role="button" tabindex="0">
+            <div class="box-icon">🏦</div>
+            <div class="box-name" data-key="choose-bank">اختر البنك</div>
         </div>
     </div>
 
     <!-- Backdrop -->
     <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 
-    <!-- Modals -->
-    <div class="card" id="modal-rajhi" aria-hidden="true">
+    <!-- Unified Bank Picker Modal (Dropdown only) -->
+    <div class="card" id="modal-bank" aria-hidden="true">
         <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header"><div class="bank-title" data-key="rajhi-desc">حساب مصرف الراجحي</div></div>
-        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-rajhi">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-rajhi" type="button" data-key="copy-btn">نسخ</button></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-rajhi">00000000000000</span></div><button class="copy-btn" data-copy="acc-rajhi" type="button" data-key="copy-btn">نسخ</button></div>
-    </div>
-    <div class="card" id="modal-alinma" aria-hidden="true">
-        <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header"><div class="bank-title" data-key="alinma-desc">حساب بنك الإنماء</div></div>
-        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-alinma">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-alinma" type="button" data-key="copy-btn">نسخ</button></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-alinma">00000000000000</span></div><button class="copy-btn" data-copy="acc-alinma" type="button" data-key="copy-btn">نسخ</button></div>
-    </div>
-    <div class="card" id="modal-albilad" aria-hidden="true">
-        <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header"><div class="bank-title" data-key="albilad-desc">حساب بنك البلاد</div></div>
-        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-albilad">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-albilad" type="button" data-key="copy-btn">نسخ</button></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-albilad">00000000000000</span></div><button class="copy-btn" data-copy="acc-albilad" type="button" data-key="copy-btn">نسخ</button></div>
-    </div>
-    <div class="card" id="modal-barq" aria-hidden="true">
-        <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header"><div class="bank-title" data-key="barq-desc">محفظة برق (Barq)</div></div>
-        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-barq">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-barq" type="button" data-key="copy-btn">نسخ</button></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-barq">00000000000000</span></div><button class="copy-btn" data-copy="acc-barq" type="button" data-key="copy-btn">نسخ</button></div>
-    </div>
-    <div class="card" id="modal-stc" aria-hidden="true">
-        <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header"><div class="bank-title" data-key="stc-desc">STC Pay</div></div>
-        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-stc">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-stc" type="button" data-key="copy-btn">نسخ</button></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-stc">00000000000000</span></div><button class="copy-btn" data-copy="acc-stc" type="button" data-key="copy-btn">نسخ</button></div>
-    </div>
-    <div class="card" id="modal-mobily" aria-hidden="true">
-        <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header"><div class="bank-title" data-key="mobily-desc">Mobily Pay</div></div>
-        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-mobily">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-mobily" type="button" data-key="copy-btn">نسخ</button></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-mobily">00000000000000</span></div><button class="copy-btn" data-copy="acc-mobily" type="button" data-key="copy-btn">نسخ</button></div>
-    </div>
-    <div class="card" id="modal-d360" aria-hidden="true">
-        <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header"><div class="bank-title" data-key="d360-desc">D360 Bank</div></div>
-        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-d360">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-d360" type="button" data-key="copy-btn">نسخ</button></div>
-        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-d360">00000000000000</span></div><button class="copy-btn" data-copy="acc-d360" type="button" data-key="copy-btn">نسخ</button></div>
+        <div class="bank-header"><div class="bank-title" id="bank-title" data-key="bank-picker-title">اختر البنك</div></div>
+
+        <div class="row" style="display:block;">
+            <div class="label" data-key="choose-bank">اختر البنك</div>
+            <select id="bank-select" class="bank-select" aria-label="اختر البنك">
+                <option value="rajhi" data-key="rajhi-name">الراجحي</option>
+                <option value="alinma" data-key="alinma-name">الإنماء</option>
+                <option value="albilad" data-key="albilad-name">البلاد</option>
+                <option value="barq" data-key="barq-name">برق</option>
+                <option value="stc">STC</option>
+                <option value="mobily" data-key="mobily-name">موبايلي</option>
+                <option value="d360">D360</option>
+            </select>
+        </div>
+
+        <div class="row copy-row">
+            <div class="copy-text copy-box" data-copy="iban-current">
+                <span class="label" data-key="modal-iban-label">رقم الآيبان:</span>
+                <span class="value" id="iban-current">SA0000000000000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="iban-current" type="button" data-key="copy-btn">نسخ</button>
+        </div>
+        <div class="row copy-row">
+            <div class="copy-text copy-box" data-copy="acc-current">
+                <span class="label" data-key="modal-acc-label">رقم الحساب:</span>
+                <span class="value" id="acc-current">00000000000000</span>
+            </div>
+            <button class="copy-btn" data-copy="acc-current" type="button" data-key="copy-btn">نسخ</button>
+        </div>
     </div>
 
     <!-- Footer Note -->
@@ -291,7 +281,7 @@
         <p class="note">
             <span data-key="footer-note-1">ملاحظة: تأكد من مطابقة رقم الحساب والآيبان قبل التحويل. أبلغ فوراً إذا وجدت أي خطأ.</span>
             <br />
-            <span data-key="footer-note-2">للاستخدام الآمن ننصح بكتابة وصف واضح للتحويل والتواصل عبر القنوات الرسمية للحصول على التأكيد.</span>
+            <span data-key="footer-note-2">للاستخدام الآمن ننصح بكتابة وصف واضح للتحويل والتواصل عبر القنوات الرسمية ل��حصول على التأكيد.</span>
         </p>
     </div>
 
@@ -360,7 +350,7 @@
                 'footer-note-1': 'ملاحظة: تأكد من مطابقة رقم الحساب والآيبان قبل التحويل. أبلغ فوراً إذا وجدت أي خطأ.',
                 'footer-note-2': 'للاستخدام الآمن ننصح بكتابة وصف واضح للتحويل والتواصل عبر القنوات الرسمية للحصول على التأكيد.',
                 'comments-title': 'آراؤكم تهمنا',
-                'comments-subtitle': 'شارك تقييمك وتعليقك السريع لنحسن التجربة.',
+                'comments-subtitle': 'شارك تقييمك وتعليقك ��لسريع لنحسن التجربة.',
                 'comment-name-label': 'الاسم',
                 'comment-name-placeholder': 'مثال: محمد علي',
                 'comment-rating-label': 'التقييم',
@@ -376,7 +366,9 @@
                 'gscript-warning': 'تنبيه: رابط Google Apps Script غير مهيأ، لن يتم حفظ التعليقات.',
                 'comments-loading': 'جارٍ تحميل التعليقات...',
                 'comments-load-error': 'حدث خطأ أثناء تحميل التعليقات، حاول لاحقاً.',
-                'comment-thanks': 'شكراً لك على المشاركة بتعليقك!'
+                'comment-thanks': 'شكراً لك على المشاركة بتعليقك!',
+                'choose-bank': 'اختر البنك',
+                'bank-picker-title': 'اختر البنك'
             },
             'en': {
                 'page-title': 'Payment and Transfer Information',
@@ -419,7 +411,9 @@
                 'gscript-warning': 'Warning: Google Apps Script URL is not configured, comments will not be saved.',
                 'comments-loading': 'Loading comments...',
                 'comments-load-error': 'An error occurred while loading comments, please try again later.',
-                'comment-thanks': 'Thank you for sharing your comment!'
+                'comment-thanks': 'Thank you for sharing your comment!',
+                'choose-bank': 'Choose bank',
+                'bank-picker-title': 'Choose bank'
             }
         };
 
@@ -499,26 +493,34 @@
         // COPY BUTTONS SCRIPT
         // =================================================================================
         const copySound = document.getElementById("copy-sound");
+        if (copySound) copySound.volume = 0.5;
+
+        function copyById(id, feedbackEl) {
+            const text = document.getElementById(id)?.textContent.trim();
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                if (feedbackEl) {
+                    showCopiedState(feedbackEl);
+                }
+                playCopySound();
+            }).catch(playCopySound);
+        }
 
         document.querySelectorAll(".copy-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const text = document.getElementById(btn.dataset.copy)?.textContent.trim();
-                if (!text) return;
-                navigator.clipboard.writeText(text).then(() => {
-                    showCopiedState(btn);
-                    playCopySound();
-                }).catch(playCopySound);
-            });
+            btn.addEventListener("click", () => copyById(btn.dataset.copy, btn));
         });
 
         function showCopiedState(btn) {
             const originalText = translations[currentLang]['copy-btn'];
-            btn.textContent = translations[currentLang]['copy-btn-copied'];
-            btn.classList.add("copied");
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.classList.remove("copied");
-            }, 1200);
+            const copiedText = translations[currentLang]['copy-btn-copied'];
+            if (btn && btn.classList.contains('copy-btn')) {
+                btn.textContent = copiedText;
+                btn.classList.add("copied");
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove("copied");
+                }, 1200);
+            }
         }
 
         function playCopySound() {
@@ -527,8 +529,17 @@
             copySound.play().catch(() => {});
         }
 
+        // Also allow clicking the value area to copy
+        document.addEventListener('click', (e) => {
+            const box = e.target.closest('.copy-box');
+            if (!box) return;
+            const id = box.getAttribute('data-copy');
+            const siblingBtn = box.parentElement?.querySelector('.copy-btn');
+            copyById(id, siblingBtn);
+        });
+
         // =================================================================================
-        // COMMENTS SCRIPT
+        // COMMENTS + BANK PICKER SCRIPT
         // =================================================================================
         const commentsApiUrl = "https://script.google.com/macros/s/AKfycbxOB1GoZp3FRysVzPDRvbTaJw8hPS8_lT2lz9C_4FiKrWNOWZPsQHrkBkitlp9WdrPv/exec";
         const commentsListEl = document.getElementById("comments-list");
@@ -538,6 +549,31 @@
         let comments = [];
         const LOCAL_COMMENTS_KEY = "comments_cache";
         const HAS_COMMENTED_KEY = 'has_commented';
+
+        const BANKS = {
+            rajhi: { nameKey: 'rajhi-desc', iban: 'SA0000000000000000000000', acc: '00000000000000' },
+            alinma: { nameKey: 'alinma-desc', iban: 'SA0000000000000000000000', acc: '00000000000000' },
+            albilad: { nameKey: 'albilad-desc', iban: 'SA0000000000000000000000', acc: '00000000000000' },
+            barq: { nameKey: 'barq-desc', iban: 'SA0000000000000000000000', acc: '00000000000000' },
+            stc: { nameKey: 'stc-desc', iban: 'SA0000000000000000000000', acc: '00000000000000' },
+            mobily: { nameKey: 'mobily-desc', iban: 'SA0000000000000000000000', acc: '00000000000000' },
+            d360: { nameKey: 'd360-desc', iban: 'SA0000000000000000000000', acc: '00000000000000' }
+        };
+
+        const ibanCurrent = document.getElementById('iban-current');
+        const accCurrent = document.getElementById('acc-current');
+        const bankSelect = document.getElementById('bank-select');
+
+        function setBank(bankId) {
+            const bank = BANKS[bankId] || BANKS['rajhi'];
+            if (ibanCurrent) ibanCurrent.textContent = bank.iban;
+            if (accCurrent) accCurrent.textContent = bank.acc;
+            const bankTitleEl = document.getElementById('bank-title');
+            if (bankTitleEl) bankTitleEl.textContent = translations[currentLang][bank.nameKey] || translations[currentLang]['bank-picker-title'];
+            if (bankSelect) bankSelect.value = bankId;
+        }
+
+        if (bankSelect) bankSelect.addEventListener('change', (e) => setBank(e.target.value));
 
         function checkAndDisableCommenting() {
             if (localStorage.getItem(HAS_COMMENTED_KEY) === 'true') {
@@ -695,10 +731,13 @@
             comments = loadLocalComments();
             updateStarView();
             setLanguage(currentLang);
+            setBank('rajhi');
             fetchComments();
             checkAndDisableCommenting();
         });
+
     </script>
+
     <script>
         // Rain Effect Script
         function createRain() {
@@ -723,6 +762,7 @@
             createRain();
         }
     </script>
+
 </body>
 
 </html>
