@@ -121,30 +121,44 @@
     <audio id="background-music" src="music.mp3" autoplay loop></audio>
 
     <div id="music-control">
-        <button id="music-toggle-btn">🎵</button>
+        <button id="music-toggle-btn">🔇</button>
     </div>
 
     <script>
       var music = document.getElementById("background-music");
       const musicToggleBtn = document.getElementById("music-toggle-btn");
 
-      if (music) {
-        music.volume = 0.2; // Set volume to 20%
-      }
+      if (music && musicToggleBtn) {
+        music.volume = 0.2;
 
-      if (musicToggleBtn && music) {
-        const updateButtonState = () => {
-            musicToggleBtn.textContent = music.paused ? '🔇' : '🎵';
+        const updateIcon = () => {
+            musicToggleBtn.textContent = (music.paused || music.muted) ? '🔇' : '🎵';
         };
-        music.onplay = music.onpause = updateButtonState;
-        updateButtonState();
+
+        music.onplay = music.onpause = music.onvolumechange = updateIcon;
+
         musicToggleBtn.addEventListener('click', () => {
-          if (music.paused) {
-            music.play().catch(e => console.error("Audio play failed:", e));
-          } else {
-            music.pause();
-          }
+            if (music.paused) {
+                music.muted = false;
+                music.play().catch(e => console.error("Play failed", e));
+            } else {
+                music.muted = !music.muted;
+            }
         });
+
+        let playPromise = music.play();
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                console.log("Autoplay with sound started successfully.");
+                music.muted = false;
+            }).catch(error => {
+                console.log("Autoplay with sound failed. Trying muted autoplay.", error);
+                music.muted = true;
+                music.play().catch(e => console.error("Muted autoplay also failed.", e));
+            });
+        }
+
+        updateIcon();
       }
     </script>
 
@@ -607,8 +621,6 @@
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(payload)
             });
-            // "no-cors" mode means we cannot read the response, but the request is sent.
-            // We will assume success and refresh comments from the server.
         }
 
         let currentRating = 5;
@@ -648,11 +660,9 @@
                 setCommentsStatus("comment-success");
                 localStorage.setItem(HAS_COMMENTED_KEY, 'true');
                 checkAndDisableCommenting();
-                // We optimistically add the comment to the UI while waiting for fetch
                 comments.unshift({ ...newComment, timestamp: new Date().toISOString() });
                 renderComments();
-                // Then fetch to get the canonical list
-                setTimeout(fetchComments, 2000); // Delay fetch slightly
+                setTimeout(fetchComments, 2000);
             } catch (err) {
                 console.error(err);
                 setCommentsStatus(err.message || "comment-error", true);
