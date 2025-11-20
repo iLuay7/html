@@ -179,7 +179,7 @@
       const musicToggleBtn = document.getElementById("music-toggle-btn");
 
       if (music && musicToggleBtn) {
-        music.volume = 0.2;
+        music.volume = 0.1;
 
         const updateIcon = () => {
             musicToggleBtn.textContent = (music.paused || music.muted) ? '🔇' : '🎵';
@@ -196,15 +196,27 @@
             }
         });
 
+        // gentle fade-in to avoid sudden start
+        const fadeTo = 0.1;
+        const fadeMs = 800;
+        music.volume = 0;
+
         let playPromise = music.play();
         if (playPromise !== undefined) {
             playPromise.then(_ => {
-                console.log("Autoplay with sound started successfully.");
                 music.muted = false;
+                const steps = 16;
+                const step = fadeTo / steps;
+                let i = 0;
+                const id = setInterval(() => {
+                    i++;
+                    music.volume = Math.min(fadeTo, music.volume + step);
+                    if (i >= steps) clearInterval(id);
+                }, Math.max(10, Math.floor(fadeMs / steps)));
             }).catch(error => {
-                console.log("Autoplay with sound failed. Trying muted autoplay.", error);
+                // Fallback: try muted autoplay
                 music.muted = true;
-                music.play().catch(e => console.error("Muted autoplay also failed.", e));
+                music.play().catch(() => {});
             });
         }
 
