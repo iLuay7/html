@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8" />
-    <title>بيانات التحويل والدفع</title>
+    <title id="page-title">بيانات التحويل والدفع</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="style.css" />
     <style>
@@ -66,10 +66,87 @@
                 padding: 14px;
             }
         }
+
+        #music-control {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+        }
+
+        #music-toggle-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        #lang-switcher {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+        }
+
+        #lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
     </style>
 </head>
 
 <body>
+    <div id="lang-switcher">
+        <button id="lang-btn">EN</button>
+    </div>
+    <audio id="background-music" src="music.mp3" autoplay loop></audio>
+
+    <div id="music-control">
+        <button id="music-toggle-btn">🎵</button>
+    </div>
+
+    <script>
+      var music = document.getElementById("background-music");
+      const musicToggleBtn = document.getElementById("music-toggle-btn");
+
+      if (music) {
+        music.volume = 0.2; // Set volume to 20%
+      }
+
+      if (musicToggleBtn && music) {
+        const updateButtonState = () => {
+            musicToggleBtn.textContent = music.paused ? '🔇' : '🎵';
+        };
+        music.onplay = music.onpause = updateButtonState;
+        updateButtonState();
+        musicToggleBtn.addEventListener('click', () => {
+          if (music.paused) {
+            music.play().catch(e => console.error("Audio play failed:", e));
+          } else {
+            music.pause();
+          }
+        });
+      }
+    </script>
 
     <!-- copy sound (coin / jump style) -->
     <audio id="copy-sound" preload="auto">
@@ -81,58 +158,44 @@
 
     <!-- bubbles -->
     <div class="bubbles">
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
     </div>
 
     <!-- Header -->
     <div class="header-section">
-        <h1>بيانات التحويل والدفع</h1>
-        <div class="subtitle">اختر مزود الخدمة وانسخ بيانات الحساب لإتمام تحويلك بسرعة.</div>
+        <h1 data-key="header-title">بيانات التحويل والدفع</h1>
+        <div class="subtitle" data-key="header-subtitle">اختر مزود الخدمة وانسخ بيانات الحساب لإتمام تحويلك بسرعة.</div>
     </div>
 
     <!-- Bank Grid -->
     <div class="bank-grid" id="bank-grid">
         <div class="bank-box" data-target="modal-rajhi" role="button" tabindex="0">
-            <div class="box-icon">الراجحي</div>
-            <div class="box-name">حساب مصرف الراجحي</div>
+            <div class="box-icon" data-key="rajhi-name">الراجحي</div>
+            <div class="box-name" data-key="rajhi-desc">حساب مصرف الراجحي</div>
         </div>
         <div class="bank-box" data-target="modal-alinma" role="button" tabindex="0">
-            <div class="box-icon">الإنماء</div>
-            <div class="box-name">حساب بنك الإنماء</div>
+            <div class="box-icon" data-key="alinma-name">الإنماء</div>
+            <div class="box-name" data-key="alinma-desc">حساب بنك الإنماء</div>
         </div>
         <div class="bank-box" data-target="modal-albilad" role="button" tabindex="0">
-            <div class="box-icon">البلاد</div>
-            <div class="box-name">حساب بنك البلاد</div>
+            <div class="box-icon" data-key="albilad-name">البلاد</div>
+            <div class="box-name" data-key="albilad-desc">حساب بنك البلاد</div>
         </div>
         <div class="bank-box" data-target="modal-barq" role="button" tabindex="0">
-            <div class="box-icon">برق</div>
-            <div class="box-name">محفظة برق (Barq)</div>
+            <div class="box-icon" data-key="barq-name">برق</div>
+            <div class="box-name" data-key="barq-desc">محفظة برق (Barq)</div>
         </div>
         <div class="bank-box" data-target="modal-stc" role="button" tabindex="0">
             <div class="box-icon">STC</div>
-            <div class="box-name">STC Pay</div>
+            <div class="box-name" data-key="stc-desc">STC Pay</div>
         </div>
         <div class="bank-box" data-target="modal-mobily" role="button" tabindex="0">
-            <div class="box-icon">موبايلي</div>
-            <div class="box-name">Mobily Pay</div>
+            <div class="box-icon" data-key="mobily-name">موبايلي</div>
+            <div class="box-name" data-key="mobily-desc">Mobily Pay</div>
         </div>
         <div class="bank-box" data-target="modal-d360" role="button" tabindex="0">
             <div class="box-icon">D360</div>
-            <div class="box-name">D360 Bank</div>
+            <div class="box-name" data-key="d360-desc">D360 Bank</div>
         </div>
     </div>
 
@@ -140,320 +203,258 @@
     <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 
     <!-- Modals -->
-    <!-- Rajhi -->
     <div class="card" id="modal-rajhi" aria-hidden="true">
         <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header">
-            <div class="bank-title">حساب مصرف الراجحي</div>
-        </div>
-        <div class="row">
-            <span class="label">الوصف:</span>
-            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الآيبان:</span>
-                <span class="value" id="iban-rajhi">SA0000000000000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="iban-rajhi" type="button">نسخ</button>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الحساب:</span>
-                <span class="value" id="acc-rajhi">00000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="acc-rajhi" type="button">نسخ</button>
-        </div>
+        <div class="bank-header"><div class="bank-title" data-key="rajhi-desc">حساب مصرف الراجحي</div></div>
+        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-rajhi">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-rajhi" type="button" data-key="copy-btn">نسخ</button></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-rajhi">00000000000000</span></div><button class="copy-btn" data-copy="acc-rajhi" type="button" data-key="copy-btn">نسخ</button></div>
     </div>
-
-    <!-- Alinma -->
     <div class="card" id="modal-alinma" aria-hidden="true">
         <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header">
-            <div class="bank-title">حساب بنك الإنماء</div>
-        </div>
-        <div class="row">
-            <span class="label">الوصف:</span>
-            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الآيبان:</span>
-                <span class="value" id="iban-alinma">SA0000000000000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="iban-alinma" type="button">نسخ</button>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الحساب:</span>
-                <span class="value" id="acc-alinma">00000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="acc-alinma" type="button">نسخ</button>
-        </div>
+        <div class="bank-header"><div class="bank-title" data-key="alinma-desc">حساب بنك الإنماء</div></div>
+        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-alinma">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-alinma" type="button" data-key="copy-btn">نسخ</button></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-alinma">00000000000000</span></div><button class="copy-btn" data-copy="acc-alinma" type="button" data-key="copy-btn">نسخ</button></div>
     </div>
-
-    <!-- Albilad -->
     <div class="card" id="modal-albilad" aria-hidden="true">
         <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header">
-            <div class="bank-title">حساب بنك البلاد</div>
-        </div>
-        <div class="row">
-            <span class="label">الوصف:</span>
-            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الآيبان:</span>
-                <span class="value" id="iban-albilad">SA0000000000000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="iban-albilad" type="button">نسخ</button>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الحساب:</span>
-                <span class="value" id="acc-albilad">00000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="acc-albilad" type="button">نسخ</button>
-        </div>
+        <div class="bank-header"><div class="bank-title" data-key="albilad-desc">حساب بنك البلاد</div></div>
+        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-albilad">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-albilad" type="button" data-key="copy-btn">نسخ</button></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-albilad">00000000000000</span></div><button class="copy-btn" data-copy="acc-albilad" type="button" data-key="copy-btn">نسخ</button></div>
     </div>
-
-    <!-- Barq -->
     <div class="card" id="modal-barq" aria-hidden="true">
         <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header">
-            <div class="bank-title">محفظة برق (Barq)</div>
-        </div>
-        <div class="row">
-            <span class="label">الوصف:</span>
-            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الآيبان:</span>
-                <span class="value" id="iban-barq">SA0000000000000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="iban-barq" type="button">نسخ</button>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الحساب:</span>
-                <span class="value" id="acc-barq">00000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="acc-barq" type="button">نسخ</button>
-        </div>
+        <div class="bank-header"><div class="bank-title" data-key="barq-desc">محفظة برق (Barq)</div></div>
+        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-barq">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-barq" type="button" data-key="copy-btn">نسخ</button></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-barq">00000000000000</span></div><button class="copy-btn" data-copy="acc-barq" type="button" data-key="copy-btn">نسخ</button></div>
     </div>
-
-    <!-- STC Pay -->
     <div class="card" id="modal-stc" aria-hidden="true">
         <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header">
-            <div class="bank-title">STC Pay</div>
-        </div>
-        <div class="row">
-            <span class="label">الوصف:</span>
-            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الآيبان:</span>
-                <span class="value" id="iban-stc">SA0000000000000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="iban-stc" type="button">نسخ</button>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الحساب:</span>
-                <span class="value" id="acc-stc">00000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="acc-stc" type="button">نسخ</button>
-        </div>
+        <div class="bank-header"><div class="bank-title" data-key="stc-desc">STC Pay</div></div>
+        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-stc">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-stc" type="button" data-key="copy-btn">نسخ</button></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-stc">00000000000000</span></div><button class="copy-btn" data-copy="acc-stc" type="button" data-key="copy-btn">نسخ</button></div>
     </div>
-
-    <!-- Mobily Pay -->
     <div class="card" id="modal-mobily" aria-hidden="true">
         <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header">
-            <div class="bank-title">Mobily Pay</div>
-        </div>
-        <div class="row">
-            <span class="label">الوصف:</span>
-            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الآيبان:</span>
-                <span class="value" id="iban-mobily">SA0000000000000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="iban-mobily" type="button">نسخ</button>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الحساب:</span>
-                <span class="value" id="acc-mobily">00000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="acc-mobily" type="button">نسخ</button>
-        </div>
+        <div class="bank-header"><div class="bank-title" data-key="mobily-desc">Mobily Pay</div></div>
+        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-mobily">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-mobily" type="button" data-key="copy-btn">نسخ</button></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-mobily">00000000000000</span></div><button class="copy-btn" data-copy="acc-mobily" type="button" data-key="copy-btn">نسخ</button></div>
     </div>
-
-    <!-- D360 -->
     <div class="card" id="modal-d360" aria-hidden="true">
         <button class="close-modal" type="button">&times;</button>
-        <div class="bank-header">
-            <div class="bank-title">D360 Bank</div>
-        </div>
-        <div class="row">
-            <span class="label">الوصف:</span>
-            <span class="value">اكتب وصف التحويل هنا إذا رغبت.</span>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الآيبان:</span>
-                <span class="value" id="iban-d360">SA0000000000000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="iban-d360" type="button">نسخ</button>
-        </div>
-        <div class="row copy-row">
-            <div class="copy-text">
-                <span class="label">رقم الحساب:</span>
-                <span class="value" id="acc-d360">00000000000000</span>
-            </div>
-            <button class="copy-btn" data-copy="acc-d360" type="button">نسخ</button>
-        </div>
+        <div class="bank-header"><div class="bank-title" data-key="d360-desc">D360 Bank</div></div>
+        <div class="row"><span class="label" data-key="modal-desc-label">الوصف:</span><span class="value" data-key="modal-desc-value">اكتب وصف التحويل هنا إذا رغبت.</span></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-iban-label">رقم الآيبان:</span><span class="value" id="iban-d360">SA0000000000000000000000</span></div><button class="copy-btn" data-copy="iban-d360" type="button" data-key="copy-btn">نسخ</button></div>
+        <div class="row copy-row"><div class="copy-text"><span class="label" data-key="modal-acc-label">رقم الحساب:</span><span class="value" id="acc-d360">00000000000000</span></div><button class="copy-btn" data-copy="acc-d360" type="button" data-key="copy-btn">نسخ</button></div>
     </div>
 
     <!-- Footer Note -->
     <div class="footer-note">
         <p class="note">
-            ملاحظة: تأكد من مطابقة رقم الحساب والآيبان قبل التحويل. أبلغ فوراً إذا وجدت أي خطأ.
+            <span data-key="footer-note-1">ملاحظة: تأكد من مطابقة رقم الحساب والآيبان قبل التحويل. أبلغ فوراً إذا وجدت أي خطأ.</span>
             <br />
-            للاستخدام الآمن ننصح بكتابة وصف واضح للتحويل والتواصل عبر القنوات الرسمية للحصول على التأكيد.
+            <span data-key="footer-note-2">للاستخدام الآمن ننصح بكتابة وصف واضح للتحويل والتواصل عبر القنوات الرسمية للحصول على التأكيد.</span>
         </p>
     </div>
 
     <!-- comments section -->
     <div class="comments-card">
         <div class="comments-header">
-            <h2 class="comments-title">آراؤكم تهمنا</h2>
-            <div class="comments-subtitle">شارك تقييمك وتعليقك السريع لنحسن التجربة.</div>
+            <h2 class="comments-title" data-key="comments-title">آراؤكم تهمنا</h2>
+            <div class="comments-subtitle" data-key="comments-subtitle">شارك تقييمك وتعليقك السريع لنحسن التجربة.</div>
         </div>
 
         <form id="comment-form" class="comment-form">
             <div class="form-row">
-                <label for="comment-name">الاسم</label>
-                <input id="comment-name" type="text" placeholder="مثال: محمد علي" />
+                <label for="comment-name" data-key="comment-name-label">الاسم</label>
+                <input id="comment-name" type="text" data-key-placeholder="comment-name-placeholder" placeholder="مثال: محمد علي" />
             </div>
 
             <div class="form-row">
-                <label>التقييم</label>
+                <label data-key="comment-rating-label">التقييم</label>
                 <div class="stars" id="rating-stars">
-                    <span class="star" data-value="1">&#9733;</span>
-                    <span class="star" data-value="2">&#9733;</span>
-                    <span class="star" data-value="3">&#9733;</span>
-                    <span class="star" data-value="4">&#9733;</span>
-                    <span class="star" data-value="5">&#9733;</span>
+                    <span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span>
                 </div>
             </div>
 
             <div class="form-row">
-                <label for="comment-text">التعليق</label>
-                <textarea id="comment-text" rows="3" placeholder="اكتب رأيك باختصار حول تجربة التحويل..." required></textarea>
+                <label for="comment-text" data-key="comment-text-label">التعليق</label>
+                <textarea id="comment-text" rows="3" data-key-placeholder="comment-text-placeholder" placeholder="اكتب رأيك باختصار حول تجربة التحويل..." required></textarea>
             </div>
 
-            <button type="submit" class="submit-comment-btn">إرسال التعليق</button>
+            <button type="submit" class="submit-comment-btn" data-key="comment-submit-btn">إرسال التعليق</button>
         </form>
 
         <div id="comments-status" class="comments-status" aria-live="polite"></div>
 
         <div id="comments-list" class="comments-list">
-            <p class="no-comments">لا توجد تعليقات بعد.</p>
+            <p class="no-comments" data-key="no-comments">لا توجد تعليقات بعد.</p>
         </div>
     </div>
 
     <script>
-        // Modal Logic (open/close with accessibility support)
+        // =================================================================================
+        // TRANSLATION SCRIPT
+        // =================================================================================
+        const translations = {
+            'ar': {
+                'page-title': 'بيانات التحويل والدفع',
+                'header-title': 'بيانات التحويل والدفع',
+                'header-subtitle': 'اختر مزود الخدمة وانسخ بيانات الحساب لإتمام تحويلك بسرعة.',
+                'rajhi-name': 'الراجحي',
+                'rajhi-desc': 'حساب مصرف الراجحي',
+                'alinma-name': 'الإنماء',
+                'alinma-desc': 'حساب بنك الإنماء',
+                'albilad-name': 'البلاد',
+                'albilad-desc': 'حساب بنك البلاد',
+                'barq-name': 'برق',
+                'barq-desc': 'محفظة برق (Barq)',
+                'stc-desc': 'STC Pay',
+                'mobily-name': 'موبايلي',
+                'mobily-desc': 'Mobily Pay',
+                'd360-desc': 'D360 Bank',
+                'modal-desc-label': 'الوصف:',
+                'modal-desc-value': 'اكتب وصف التحويل هنا إذا رغبت.',
+                'modal-iban-label': 'رقم الآيبان:',
+                'modal-acc-label': 'رقم الحساب:',
+                'copy-btn': 'نسخ',
+                'copy-btn-copied': 'تم النسخ!',
+                'footer-note-1': 'ملاحظة: تأكد من مطابقة رقم الحساب والآيبان قبل التحويل. أبلغ فوراً إذا وجدت أي خطأ.',
+                'footer-note-2': 'للاستخدام الآمن ننصح بكتابة وصف واضح للتحويل والتواصل عبر القنوات الرسمية للحصول على التأكيد.',
+                'comments-title': 'آراؤكم تهمنا',
+                'comments-subtitle': 'شارك تقييمك وتعليقك السريع لنحسن التجربة.',
+                'comment-name-label': 'الاسم',
+                'comment-name-placeholder': 'مثال: محمد علي',
+                'comment-rating-label': 'التقييم',
+                'comment-text-label': 'التعليق',
+                'comment-text-placeholder': 'اكتب رأيك باختصار حول تجربة التحويل...',
+                'comment-submit-btn': 'إرسال التعليق',
+                'no-comments': 'لا توجد تعليقات بعد.',
+                'anonymous-user': 'مستخدم بدون اسم',
+                'comment-required': 'الرجاء كتابة تعليق قبل الإرسال.',
+                'comment-sending': 'جاري إرسال تعليقك...',
+                'comment-success': 'تم إرسال تعليقك، شكراً!',
+                'comment-error': 'حدث خطأ أثناء إرسال التعليق، حاول مرة أخرى.',
+                'gscript-warning': 'تنبيه: رابط Google Apps Script غير مهيأ، لن يتم حفظ التعليقات.',
+                'comments-loading': 'جارٍ تحميل التعليقات...',
+                'comments-load-error': 'حدث خطأ أثناء تحميل التعليقات، حاول لاحقاً.',
+                'comment-thanks': 'شكراً لك على المشاركة بتعليقك!'
+            },
+            'en': {
+                'page-title': 'Payment and Transfer Information',
+                'header-title': 'Payment and Transfer Information',
+                'header-subtitle': 'Choose a service provider and copy the account details to complete your transfer quickly.',
+                'rajhi-name': 'Al Rajhi',
+                'rajhi-desc': 'Al Rajhi Bank Account',
+                'alinma-name': 'Alinma',
+                'alinma-desc': 'Alinma Bank Account',
+                'albilad-name': 'Albilad',
+                'albilad-desc': 'Bank Albilad Account',
+                'barq-name': 'Barq',
+                'barq-desc': 'Barq Wallet',
+                'stc-desc': 'STC Pay',
+                'mobily-name': 'Mobily',
+                'mobily-desc': 'Mobily Pay',
+                'd360-desc': 'D360 Bank',
+                'modal-desc-label': 'Description:',
+                'modal-desc-value': 'Write the transfer description here if you wish.',
+                'modal-iban-label': 'IBAN:',
+                'modal-acc-label': 'Account Number:',
+                'copy-btn': 'Copy',
+                'copy-btn-copied': 'Copied!',
+                'footer-note-1': 'Note: Please verify the account number and IBAN before transferring. Report any errors immediately.',
+                'footer-note-2': 'For secure use, we recommend writing a clear transfer description and communicating through official channels for confirmation.',
+                'comments-title': 'Your Feedback Matters',
+                'comments-subtitle': 'Share your quick rating and comment to improve the experience.',
+                'comment-name-label': 'Name',
+                'comment-name-placeholder': 'e.g., John Doe',
+                'comment-rating-label': 'Rating',
+                'comment-text-label': 'Comment',
+                'comment-text-placeholder': 'Briefly write your opinion about the transfer experience...',
+                'comment-submit-btn': 'Submit Comment',
+                'no-comments': 'No comments yet.',
+                'anonymous-user': 'Anonymous User',
+                'comment-required': 'Please write a comment before submitting.',
+                'comment-sending': 'Submitting your comment...',
+                'comment-success': 'Your comment has been sent, thank you!',
+                'comment-error': 'An error occurred while sending the comment, please try again.',
+                'gscript-warning': 'Warning: Google Apps Script URL is not configured, comments will not be saved.',
+                'comments-loading': 'Loading comments...',
+                'comments-load-error': 'An error occurred while loading comments, please try again later.',
+                'comment-thanks': 'Thank you for sharing your comment!'
+            }
+        };
+
+        let currentLang = 'ar';
+
+        const setLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-key-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-key-placeholder');
+                if (translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+
+            const pageTitle = document.getElementById('page-title');
+            if (pageTitle) {
+                pageTitle.textContent = translations[lang]['page-title'];
+            }
+            renderComments();
+            checkAndDisableCommenting();
+        };
+        
+        const langBtn = document.getElementById('lang-btn');
+        langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            langBtn.textContent = currentLang === 'ar' ? 'EN' : 'AR';
+            setLanguage(currentLang);
+        });
+
+        // =================================================================================
+        // MODAL SCRIPT
+        // =================================================================================
         const backdrop = document.getElementById("backdrop");
         const bankBoxes = document.querySelectorAll(".bank-box");
         const closeButtons = document.querySelectorAll(".close-modal");
-        const cards = document.querySelectorAll(".card");
+        const modalCards = document.querySelectorAll(".card");
 
         function openModal(cardId) {
             const card = document.getElementById(cardId);
             if (card) {
                 backdrop.classList.add("active");
-                backdrop.setAttribute("aria-hidden", "false");
                 card.classList.add("active");
-                card.setAttribute("aria-hidden", "false");
-                const closeBtn = card.querySelector(".close-modal");
-                if (closeBtn) {
-                    closeBtn.focus();
-                }
             }
         }
 
         function closeModal() {
             backdrop.classList.remove("active");
-            backdrop.setAttribute("aria-hidden", "true");
-            cards.forEach(c => {
-                c.classList.remove("active");
-                c.setAttribute("aria-hidden", "true");
-            });
-            const firstBox = document.querySelector(".bank-box");
-            if (firstBox) firstBox.focus();
+            modalCards.forEach(c => c.classList.remove("active"));
         }
 
         bankBoxes.forEach(box => {
-            box.addEventListener("click", () => {
-                const target = box.getAttribute("data-target");
-                openModal(target);
-            });
-            // keyboard support (Enter / Space)
+            box.addEventListener("click", () => openModal(box.dataset.target));
             box.addEventListener("keydown", (e) => {
-                if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+                if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    const target = box.getAttribute("data-target");
-                    openModal(target);
+                    openModal(box.dataset.target);
                 }
             });
         });
-
-        // Ensure each modal has an account row even if missing in markup
-        (function ensureAccountRows() {
-            cards.forEach(function (card) {
-                const key = card.id.replace(/^modal-/, '');
-                const accId = `acc-${key}`;
-                if (!document.getElementById(accId)) {
-                    const row = document.createElement('div');
-                    row.className = 'row copy-row';
-
-                    const copyText = document.createElement('div');
-                    copyText.className = 'copy-text';
-
-                    const label = document.createElement('span');
-                    label.className = 'label';
-                    label.textContent = 'رقم الحساب:';
-
-                    const value = document.createElement('span');
-                    value.className = 'value';
-                    value.id = accId;
-                    value.textContent = 'أضف رقم الحساب هنا';
-
-                    copyText.appendChild(label);
-                    copyText.appendChild(value);
-
-                    const btn = document.createElement('button');
-                    btn.className = 'copy-btn';
-                    btn.type = 'button';
-                    btn.setAttribute('data-copy', accId);
-                    btn.textContent = 'نسخ';
-
-                    row.appendChild(copyText);
-                    row.appendChild(btn);
-
-                    card.appendChild(row);
-                }
-            });
-        })();
 
         closeButtons.forEach(btn => btn.addEventListener("click", closeModal));
         backdrop.addEventListener("click", closeModal);
@@ -461,40 +462,27 @@
             if (e.key === "Escape") closeModal();
         });
 
-        // copy buttons + sound
+        // =================================================================================
+        // COPY BUTTONS SCRIPT
+        // =================================================================================
         const copySound = document.getElementById("copy-sound");
 
-        document.querySelectorAll(".copy-btn").forEach(function (btn) {
-            btn.addEventListener("click", function () {
-                const targetId = btn.getAttribute("data-copy");
-                const el = document.getElementById(targetId);
-                if (!el) return;
-                const text = el.textContent.trim();
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(text).then(function () {
-                        showCopiedState(btn);
-                        playCopySound();
-                    }).catch(function () {
-                        playCopySound();
-                    });
-                } else {
-                    const tempInput = document.createElement("input");
-                    tempInput.value = text;
-                    document.body.appendChild(tempInput);
-                    tempInput.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(tempInput);
+        document.querySelectorAll(".copy-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const text = document.getElementById(btn.dataset.copy)?.textContent.trim();
+                if (!text) return;
+                navigator.clipboard.writeText(text).then(() => {
                     showCopiedState(btn);
                     playCopySound();
-                }
+                }).catch(playCopySound);
             });
         });
 
         function showCopiedState(btn) {
-            const originalText = btn.textContent;
-            btn.textContent = "تم النسخ!";
+            const originalText = translations[currentLang]['copy-btn'];
+            btn.textContent = translations[currentLang]['copy-btn-copied'];
             btn.classList.add("copied");
-            setTimeout(function () {
+            setTimeout(() => {
                 btn.textContent = originalText;
                 btn.classList.remove("copied");
             }, 1200);
@@ -502,25 +490,44 @@
 
         function playCopySound() {
             if (!copySound) return;
-            try {
-                copySound.currentTime = 0;
-                copySound.play().catch(function () { });
-            } catch (e) { }
+            copySound.currentTime = 0;
+            copySound.play().catch(() => {});
         }
 
-        // comments (Google Forms backend)
-        const commentsApiUrl = "https://script.google.com/macros/s/AKfycbxOB1GoZp3FRysVzPDRvbTaJw8hPS8_lT2lz9C_4FiKrWNOWZPsQHrkBkitlp9WdrPv/exec"; // جاهز للنشر عبر Apps Script (يتطلب حساب Google)
+        // =================================================================================
+        // COMMENTS SCRIPT
+        // =================================================================================
+        const commentsApiUrl = "https://script.google.com/macros/s/AKfycbxOB1GoZp3FRysVzPDRvbTaJw8hPS8_lT2lz9C_4FiKrWNOWZPsQHrkBkitlp9WdrPv/exec";
         const commentsListEl = document.getElementById("comments-list");
         const commentsStatusEl = document.getElementById("comments-status");
+        const commentForm = document.getElementById("comment-form");
+        const commentsCard = document.querySelector(".comments-card");
         let comments = [];
         const LOCAL_COMMENTS_KEY = "comments_cache";
+        const HAS_COMMENTED_KEY = 'has_commented';
+
+        function checkAndDisableCommenting() {
+            if (localStorage.getItem(HAS_COMMENTED_KEY) === 'true') {
+                if (commentForm) {
+                    commentForm.style.display = 'none';
+                }
+                const oldMsg = commentsCard.querySelector('.thank-you-comment');
+                if (oldMsg) {
+                    oldMsg.remove();
+                }
+                const thankYouMsg = document.createElement('p');
+                thankYouMsg.textContent = translations[currentLang]['comment-thanks'];
+                thankYouMsg.className = 'thank-you-comment';
+                thankYouMsg.style.textAlign = 'center';
+                thankYouMsg.style.padding = '20px';
+                commentsCard.appendChild(thankYouMsg);
+            }
+        }
 
         function loadLocalComments() {
             try {
                 const raw = localStorage.getItem(LOCAL_COMMENTS_KEY);
-                if (!raw) return [];
-                const parsed = JSON.parse(raw);
-                return Array.isArray(parsed) ? parsed : [];
+                return raw ? (JSON.parse(raw) || []) : [];
             } catch (e) {
                 return [];
             }
@@ -529,52 +536,40 @@
         function persistLocalComments(list) {
             try {
                 localStorage.setItem(LOCAL_COMMENTS_KEY, JSON.stringify(list || []));
-            } catch (e) { }
+            } catch (e) {}
         }
 
-        function setCommentsStatus(message, isError = false) {
+        function setCommentsStatus(messageKey, isError = false) {
             if (!commentsStatusEl) return;
-            commentsStatusEl.textContent = message || "";
-            commentsStatusEl.classList.toggle("error", Boolean(isError));
+            const message = translations[currentLang][messageKey] || messageKey || '';
+            commentsStatusEl.textContent = message;
+            commentsStatusEl.classList.toggle("error", isError);
         }
 
         function renderComments() {
             if (!commentsListEl) return;
-
             commentsListEl.innerHTML = "";
-
             if (!comments || comments.length === 0) {
-                commentsListEl.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد.</p>';
+                commentsListEl.innerHTML = `<p class="no-comments" data-key="no-comments">${translations[currentLang]['no-comments']}</p>`;
                 return;
             }
-
-            comments.forEach(function (c) {
+            comments.forEach(c => {
                 const item = document.createElement("div");
                 item.className = "comment-item";
-
                 const header = document.createElement("div");
                 header.className = "comment-header";
-
                 const nameEl = document.createElement("div");
                 nameEl.className = "comment-name";
-                nameEl.textContent = c.name || "مستخدم بدون اسم";
-
+                nameEl.textContent = c.name || translations[currentLang]['anonymous-user'];
                 const starsEl = document.createElement("div");
                 starsEl.className = "comment-stars";
                 const rating = Number(c.rating || 0);
-                let starsText = "";
-                for (let i = 1; i <= 5; i++) {
-                    starsText += i <= rating ? "★" : "☆";
-                }
-                starsEl.textContent = starsText;
-
+                starsEl.textContent = "★".repeat(rating) + "☆".repeat(5 - rating);
                 header.appendChild(nameEl);
                 header.appendChild(starsEl);
-
                 const body = document.createElement("div");
                 body.className = "comment-text";
                 body.textContent = c.text || "";
-
                 item.appendChild(header);
                 item.appendChild(body);
                 commentsListEl.appendChild(item);
@@ -583,130 +578,96 @@
 
         async function fetchComments() {
             if (!commentsApiUrl || commentsApiUrl.includes("REPLACE_WITH_YOUR_DEPLOYMENT_ID")) {
-                setCommentsStatus("تنبيه: رابط Google Apps Script غير مهيأ، لن يتم حفظ التعليقات.", true);
+                setCommentsStatus("gscript-warning", true);
                 renderComments();
                 return;
             }
-            setCommentsStatus("جارٍ تحميل التعليقات...");
+            setCommentsStatus("comments-loading");
             try {
                 const response = await fetch(commentsApiUrl, { method: "GET", cache: "no-store" });
-                if (!response.ok) throw new Error(`حدث خطأ أثناء تحميل التعليقات (${response.status})`);
+                if (!response.ok) throw new Error("comments-load-error");
                 const data = await response.json();
                 comments = Array.isArray(data.comments) ? data.comments : [];
                 renderComments();
                 persistLocalComments(comments);
-                setCommentsStatus(comments.length ? "" : "لا توجد تعليقات بعد.");
+                setCommentsStatus(comments.length ? "" : "no-comments");
             } catch (error) {
                 console.error(error);
-                setCommentsStatus(error.message || "حدث خطأ أثناء تحميل التعليقات، حاول لاحقاً.", true);
+                setCommentsStatus(error.message || "comments-load-error", true);
             }
         }
 
         async function sendCommentToGoogle(payload) {
             if (!commentsApiUrl || commentsApiUrl.includes("REPLACE_WITH_YOUR_DEPLOYMENT_ID")) {
-                throw new Error("رابط Google Apps Script غير مهيأ.");
+                throw new Error("gscript-warning");
             }
-            try {
-                const response = await fetch(commentsApiUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" }, // text/plain لتفادي طلب preflight
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) {
-                    throw new Error(`حدث خطأ أثناء إرسال التعليق (${response.status})`);
-                }
-                const result = await response.json().catch(() => ({}));
-                if (result.success === false) {
-                    throw new Error(result.message || "تعذر إرسال التعليق.");
-                }
-                return result;
-            } catch (primaryErr) {
-                console.warn("Primary POST failed, trying no-cors fallback", primaryErr);
-                // fallback: no-cors يسمح بالوصول بدون preflight لكن بدون قراءة الرد
-                await fetch(commentsApiUrl, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify(payload)
-                });
-                return { success: true, offlineFallback: true };
-            }
+            const response = await fetch(commentsApiUrl, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            });
+            // "no-cors" mode means we cannot read the response, but the request is sent.
+            // We will assume success and refresh comments from the server.
         }
 
         let currentRating = 5;
         const starElems = document.querySelectorAll(".star");
         function updateStarView() {
-            starElems.forEach(function (star) {
-                const value = Number(star.getAttribute("data-value"));
-                star.classList.toggle("selected", value <= currentRating);
+            starElems.forEach(star => {
+                star.classList.toggle("selected", Number(star.dataset.value) <= currentRating);
             });
         }
-        starElems.forEach(function (star) {
-            star.addEventListener("click", function () {
-                const value = Number(star.getAttribute("data-value"));
-                currentRating = value;
+        starElems.forEach(star => {
+            star.addEventListener("click", () => {
+                currentRating = Number(star.dataset.value);
                 updateStarView();
             });
         });
-        updateStarView();
-
-        // load cached comments locally first
-        comments = loadLocalComments();
-        renderComments();
-        fetchComments();
-
-        const commentForm = document.getElementById("comment-form");
+        
         const commentNameInput = document.getElementById("comment-name");
         const commentTextInput = document.getElementById("comment-text");
         const submitBtn = document.querySelector(".submit-comment-btn");
-        commentForm.addEventListener("submit", async function (e) {
+
+        commentForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const name = (commentNameInput.value || "").trim() || "مستخدم بدون اسم";
+            const name = (commentNameInput.value || "").trim() || translations[currentLang]['anonymous-user'];
             const text = (commentTextInput.value || "").trim();
             if (!text) {
-                setCommentsStatus("الرجاء كتابة تعليق قبل الإرسال.", true);
+                setCommentsStatus("comment-required", true);
                 return;
             }
-            const newComment = {
-                name: name,
-                text: text,
-                rating: currentRating || 0
-            };
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.dataset.originalText = submitBtn.textContent;
-                submitBtn.textContent = "جاري إرسال تعليقك...";
-            }
+            const newComment = { name, text, rating: currentRating };
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = translations[currentLang]['comment-sending'];
+            
             try {
                 setCommentsStatus("");
-                const result = await sendCommentToGoogle(newComment);
-                setCommentsStatus("تم إرسال تعليقك، شكراً!");
-                commentForm.reset();
-                currentRating = 5;
-                updateStarView();
-                const stamped = { ...newComment, timestamp: new Date().toISOString() };
-                if (result && result.offlineFallback) {
-                    // fallback: أضف التعليق محلياً لأن الرد غير مقروء مع no-cors
-                    comments = [...comments, stamped];
-                    renderComments();
-                    persistLocalComments(comments);
-                } else {
-                    await fetchComments();
-                    if (!comments.find(c => c.text === stamped.text && c.name === stamped.name)) {
-                        comments = [...comments, stamped];
-                        renderComments();
-                        persistLocalComments(comments);
-                    }
-                }
+                await sendCommentToGoogle(newComment);
+                setCommentsStatus("comment-success");
+                localStorage.setItem(HAS_COMMENTED_KEY, 'true');
+                checkAndDisableCommenting();
+                // We optimistically add the comment to the UI while waiting for fetch
+                comments.unshift({ ...newComment, timestamp: new Date().toISOString() });
+                renderComments();
+                // Then fetch to get the canonical list
+                setTimeout(fetchComments, 2000); // Delay fetch slightly
             } catch (err) {
                 console.error(err);
-                setCommentsStatus(err.message || "حدث خطأ أثناء إرسال التعليق، حاول مرة أخرى.", true);
-            } finally {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = submitBtn.dataset.originalText || "إرسال التعليق";
-                }
+                setCommentsStatus(err.message || "comment-error", true);
+                submitBtn.disabled = false;
+                submitBtn.textContent = translations[currentLang]['comment-submit-btn'];
             }
+        });
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', () => {
+            comments = loadLocalComments();
+            updateStarView();
+            setLanguage(currentLang);
+            fetchComments();
+            checkAndDisableCommenting();
         });
     </script>
 </body>
