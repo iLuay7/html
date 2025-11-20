@@ -828,6 +828,34 @@
         }
     </script>
 
-</body>
+    <!-- Visitor Counter -->
+    <div class="visitor-bar">
+        <span class="visitor-icon">👁️</span>
+        <span class="visitor-text">عدد الزوار: <span id="visit-count">...</span></span>
+    </div>
 
+    <script>
+        // Visitor Counter Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const countEl = document.getElementById('visit-count');
+            const STORAGE_KEY = 'page_views_simulated';
+            const START_COUNT = 0;
+            
+            let count = localStorage.getItem(STORAGE_KEY);
+            
+            if (!count) {
+                count = START_COUNT;
+            } else {
+                count = parseInt(count) + 1;
+            }
+            
+            localStorage.setItem(STORAGE_KEY, count);
+            
+            // Animate numbers slightly
+            if (countEl) {
+                countEl.textContent = count.toLocaleString('en-US');
+            }
+        });
+    </script>
+</body>
 </html>

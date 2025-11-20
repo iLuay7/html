@@ -161,7 +161,7 @@ body {
 /* header section */
 .header-section {
     max-width: 720px;
-    margin: 120px auto 30px auto;
+    margin: 60px auto 30px auto;
     text-align: center;
     padding: 0 20px;
     position: relative;
@@ -738,4 +738,39 @@ h1 {
         left: 12px;
     }
     .row { gap: 8px; }
+}
+
+/* Visitor Counter Bar */
+.visitor-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(6, 16, 39, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 0;
+    text-align: center;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+}
+
+.visitor-icon {
+    font-size: 14px;
+}
+
+.visitor-text {
+    font-size: 12px;
+    color: #9ca8c8;
+    font-family: monospace; /* for numbers */
+}
+
+#visit-count {
+    color: #4ff2c1;
+    font-weight: bold;
+    font-size: 13px;
 }
